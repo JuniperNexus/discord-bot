@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "module": "CommonJS",
+        "outDir": "dist",
+        "rootDir": "src",
+        "skipLibCheck": true,
+        "strict": true,
+        "target": "ESNext"
+    },
+    "include": ["src"]
+}

@@ -1,0 +1,38 @@
+# Node.js modules
+node_modules/
+
+# Build output
+dist/
+
+# Environment variables
+.env
+!.env.example
+
+# Log files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# TypeScript
+*.tsbuildinfo
+
+# IDE/Editor specific files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# MacOS specific files
+.DS_Store
+
+# Windows specific files
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+
+# eslint
+.es
