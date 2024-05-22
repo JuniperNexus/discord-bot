@@ -3,6 +3,15 @@
     "bracketSameLine": false,
     "bracketSpacing": true,
     "jsonRecursiveSort": true,
+    "overrides": [
+        {
+            "files": ["*.yaml"],
+            "options": {
+                "parser": "yaml",
+                "tabWidth": 2
+            }
+        }
+    ],
     "plugins": [
         "prettier-plugin-sort-json",
         "prettier-plugin-package-perfection",
