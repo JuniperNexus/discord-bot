@@ -4,19 +4,19 @@ Welcome to the Juniper Nexus Discord Bot repository! This bot is designed to enh
 
 ## Table of Contents
 
-- [Juniper Nexus Discord Bot](#juniper-nexus-discord-bot)
-  - [Table of Contents](#table-of-contents)
-  - [Features](#features)
-  - [Installation](#installation)
-  - [Configuration](#configuration)
-  - [Usage](#usage)
-    - [Development](#development)
-    - [Production](#production)
-      - [Using PM2](#using-pm2)
-      - [Using Docker](#using-docker)
-  - [Contributing](#contributing)
-    - [Pre-commit and Pre-push Hooks](#pre-commit-and-pre-push-hooks)
-  - [License](#license)
+-   [Juniper Nexus Discord Bot](#juniper-nexus-discord-bot)
+    -   [Table of Contents](#table-of-contents)
+    -   [Features](#features)
+    -   [Installation](#installation)
+    -   [Configuration](#configuration)
+    -   [Usage](#usage)
+        -   [Development](#development)
+        -   [Production](#production)
+            -   [Using PM2](#using-pm2)
+            -   [Using Docker](#using-docker)
+    -   [Contributing](#contributing)
+        -   [Pre-commit and Pre-push Hooks](#pre-commit-and-pre-push-hooks)
+    -   [License](#license)
 
 ## Features
 
