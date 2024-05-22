@@ -8,17 +8,15 @@
         "build": "tsc",
         "dev": "tsx --watch src/index.ts",
         "format:fix": "prettier --write . --list-different",
+        "knip:fix": "pnpm knip --fix",
         "lint": "eslint . --ext .ts",
         "serve": "node dist/index.js",
         "start": "tsx src/index.ts"
     },
     "dependencies": {
-        "chalk": "^5.3.0",
         "cli-color": "^2.0.4",
         "discord.js": "^14.15.2",
         "dotenv": "^16.4.5",
-        "file-url": "^4.0.0",
-        "glob": "^10.3.16",
         "zod": "^3.23.8"
     },
     "devDependencies": {
@@ -27,8 +25,8 @@
         "@ianvs/prettier-plugin-sort-imports": "^4.2.1",
         "@types/cli-color": "^2.0.6",
         "@types/node": "^20.12.12",
-        "@types/ws": "^8.5.10",
         "@typescript-eslint/eslint-plugin": "^7.10.0",
+        "@typescript-eslint/parser": "^7.10.0",
         "eslint": "^8.57.0",
         "eslint-config-prettier": "^9.1.0",
         "eslint-plugin-prettier": "^5.1.3",
