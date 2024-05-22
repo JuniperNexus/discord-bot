@@ -18,7 +18,7 @@ export const event: Event<'interactionCreate'> = {
             if (!command) return;
 
             try {
-                if (env.NODE_ENV === 'development' && user.id !== env.CLIENT_ID) {
+                if (env.NODE_ENV === 'development' && user.id !== env.OWNER_ID) {
                     await interaction.reply({
                         embeds: [embeds.error('This command is not available in development mode.')],
                         ephemeral: true,
