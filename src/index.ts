@@ -8,6 +8,7 @@ const client = new Client({
 });
 
 client.commands = new Collection<string, Command>();
+client.cooldowns = new Collection<string, Collection<string, number>>();
 
 const main = async () => {
     await registerCommands(client);
@@ -22,5 +23,6 @@ main().catch(error => {
 declare module 'discord.js' {
     export interface Client {
         commands: Collection<string, Command>;
+        cooldowns: Collection<string, Collection<string, number>>;
     }
 }
