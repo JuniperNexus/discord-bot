@@ -8,6 +8,9 @@ const envSchema = z.object({
     CLIENT_ID: z.string(),
     GUILD_ID: z.string(),
     OWNER_ID: z.string(),
+
+    SUPABASE_URL: z.string(),
+    SUPABASE_ANON_KEY: z.string(),
 });
 
 export const env = envSchema.parse(process.env);

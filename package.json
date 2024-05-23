@@ -6,6 +6,8 @@
     "scripts": {
         "prebuild": "rimraf dist",
         "build": "tsc",
+        "database-types": "supabase gen types typescript --project-id \"qpmtvzspevuvztptbwwr\" --schema public > ./src/types/Supabase/DatabaseGenerated.ts",
+        "postdatabase-types": "pnpm format:fix",
         "dev": "tsx --watch src/index.ts",
         "format:fix": "prettier --write . --list-different",
         "knip:fix": "pnpm knip --fix",
@@ -14,9 +16,12 @@
         "start": "tsx src/index.ts"
     },
     "dependencies": {
+        "@supabase/supabase-js": "^2.43.4",
         "cli-color": "^2.0.4",
+        "dayjs": "^1.11.11",
         "discord.js": "^14.15.2",
         "dotenv": "^16.4.5",
+        "supabase": "^1.167.4",
         "zod": "^3.23.8"
     },
     "devDependencies": {

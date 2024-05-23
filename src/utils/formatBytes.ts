@@ -1,5 +1,5 @@
 export const formatBytes = (bytes: number) => {
-    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    const sizes = ['bytes', 'kb', 'mb', 'gb', 'tb'];
 
     if (bytes === 0) return 'n/a';
 

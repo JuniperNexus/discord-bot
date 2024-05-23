@@ -5,8 +5,9 @@ import { env } from '../config';
 import { Command, Event } from '../types';
 import { logger } from '../utils';
 
+export const commandData: RESTPostAPIApplicationCommandsJSONBody[] = [];
+
 const loadCommands = async (client: Client): Promise<void> => {
-    const commandData: RESTPostAPIApplicationCommandsJSONBody[] = [];
     const commandsDir = path.join(__dirname, '../commands');
 
     try {
@@ -25,12 +26,11 @@ const loadCommands = async (client: Client): Promise<void> => {
         }
 
         const rest = new REST().setToken(env.TOKEN as string);
-
         await rest.put(Routes.applicationGuildCommands(env.CLIENT_ID, env.GUILD_ID), { body: commandData });
 
         logger.info(`Successfully registered ${commandData.length} command${commandData.length === 1 ? '' : 's'}`);
     } catch (error) {
-        logger.error('Error registering commands:', error as Error);
+        logger.error('Error registering commands:', error);
     }
 };
 
@@ -53,7 +53,7 @@ const loadEvents = async (client: Client): Promise<void> => {
 
         logger.info(`Successfully registered ${eventFiles.length} event${eventFiles.length === 1 ? '' : 's'}`);
     } catch (error) {
-        logger.error('Error registering events:', error as Error);
+        logger.error('Error registering events:', error);
     }
 };
 

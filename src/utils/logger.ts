@@ -13,7 +13,7 @@ const preset =
 export const logger = {
     info: preset({ symbol: clc.green('+'), label: clc.green('INFO') }),
     warn: preset({ symbol: clc.yellow('!'), label: clc.yellow('WARN') }),
-    error: (message: string, error: Error | string) =>
+    error: (message: string, error: Error | string | unknown) =>
         console.log(
             `[${clc.red('-')}] ${clc.cyan(new Date().toISOString())} [${clc.red('ERROR')}] ${message}, ${
                 error instanceof Error ? `${error.name}: ${error.message}\n${error.stack}` : `${error}`

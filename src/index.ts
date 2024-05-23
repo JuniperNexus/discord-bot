@@ -16,7 +16,7 @@ const main = async () => {
 };
 
 main().catch(error => {
-    logger.error('Error to starting the bot:', error as Error);
+    logger.error('Error to starting the bot:', error);
 });
 
 declare module 'discord.js' {
