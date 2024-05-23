@@ -24,8 +24,8 @@ importers:
         specifier: ^16.4.5
         version: 16.4.5
       supabase:
-        specifier: ^1.167.4
-        version: 1.167.4
+        specifier: ^1.169.1
+        version: 1.169.1
       zod:
         specifier: ^3.23.8
         version: 3.23.8
@@ -82,8 +82,8 @@ importers:
         specifier: ^5.0.7
         version: 5.0.7
       tsx:
-        specifier: ^4.10.5
-        version: 4.10.5
+        specifier: ^4.11.0
+        version: 4.11.0
       typescript:
         specifier: ^5.4.5
         version: 5.4.5
@@ -1903,8 +1903,8 @@ packages:
   summary@2.1.0:
     resolution: {integrity: sha512-nMIjMrd5Z2nuB2RZCKJfFMjgS3fygbeyGk9PxPPaJR1RIcyN9yn4A63Isovzm3ZtQuEkLBVgMdPup8UeLH7aQw==}
 
-  supabase@1.167.4:
-    resolution: {integrity: sha512-DTaTsYQ48FdOPvTTl3H1cQnGDHvm4kQdBakeI5qbs7BFZgu2SRJDYRrCcSgH9sbZReOKrQdJCPfNpoy/Z359gA==}
+  supabase@1.169.1:
+    resolution: {integrity: sha512-YpgPn8kM8cGZoGQtRpSz6jyh1Kz+bc60tOX0N3rtcRogGLvcwx/Q7aRtoJf1FPYohbt8IQl2p7NZHSbmdeHBoA==}
     engines: {npm: '>=8'}
     hasBin: true
 
@@ -1973,8 +1973,8 @@ packages:
   tslib@2.6.2:
     resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
 
-  tsx@4.10.5:
-    resolution: {integrity: sha512-twDSbf7Gtea4I2copqovUiNTEDrT8XNFXsuHpfGbdpW/z9ZW4fTghzzhAG0WfrCuJmJiOEY1nLIjq4u3oujRWQ==}
+  tsx@4.11.0:
+    resolution: {integrity: sha512-vzGGELOgAupsNVssAmZjbUDfdm/pWP4R+Kg8TVdsonxbXk0bEpE1qh0yV6/QxUVXaVlNemgcPajGdJJ82n3stg==}
     engines: {node: '>=18.0.0'}
     hasBin: true
 
@@ -4020,7 +4020,7 @@ snapshots:
 
   summary@2.1.0: {}
 
-  supabase@1.167.4:
+  supabase@1.169.1:
     dependencies:
       bin-links: 4.0.4
       https-proxy-agent: 7.0.4
@@ -4090,7 +4090,7 @@ snapshots:
 
   tslib@2.6.2: {}
 
-  tsx@4.10.5:
+  tsx@4.11.0:
     dependencies:
       esbuild: 0.20.2
       get-tsconfig: 4.7.5

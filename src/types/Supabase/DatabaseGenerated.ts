@@ -66,6 +66,30 @@ export type Database = {
                 };
                 Relationships: [];
             };
+            levels: {
+                Row: {
+                    guild_id: string;
+                    id: string;
+                    level: number;
+                    user_id: string;
+                    xp: number;
+                };
+                Insert: {
+                    guild_id: string;
+                    id?: string;
+                    level: number;
+                    user_id: string;
+                    xp: number;
+                };
+                Update: {
+                    guild_id?: string;
+                    id?: string;
+                    level?: number;
+                    user_id?: string;
+                    xp?: number;
+                };
+                Relationships: [];
+            };
             users: {
                 Row: {
                     id: number;

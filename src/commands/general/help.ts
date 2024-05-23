@@ -39,7 +39,7 @@ export const command: Command = {
                     ${
                         command.options
                             ? `options:
-                    ${command.options.map(option => `> • ${option.name}: ${option.description}`).join('\n')}`
+                    ${command.options.map(o => `> • ${o.name}: ${o.description}`).join('\n')}`
                             : ''
                     }
                     `,
@@ -52,9 +52,7 @@ export const command: Command = {
                 const embed = new EmbedBuilder()
                     .setColor(config.colors.blue)
                     .setTitle('list of commands')
-                    .setDescription(
-                        client.commands.map(command => `> • ${command.name}: ${command.description}`).join('\n'),
-                    )
+                    .setDescription(client.commands.map(c => `> • ${c.name}: ${c.description}`).join('\n'))
                     .setThumbnail(client.user!.displayAvatarURL())
                     .setFooter({ text: `requested by ${interaction.user.tag}` });
 

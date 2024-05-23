@@ -54,7 +54,7 @@ export const command: Command = {
                     { name: 'color', value: info.color || 'unknown', inline: true },
                     {
                         name: 'role(s)',
-                        value: info.roles ? info.roles.map(role => role.toString()).join(', ') : 'none',
+                        value: info.roles ? info.roles.map(r => r.toString()).join(', ') : 'none',
                     },
                     { name: 'permission(s)', value: info.permissions ? info.permissions.join(', ') : 'none' },
                 )

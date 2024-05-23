@@ -67,7 +67,7 @@ export const command: Command = {
 
                             const operator = interaction.guild?.members.cache.get(t.operator)?.nickname || 'unknown';
 
-                            return `> ${i + 1}. [${type}] \`${amount}\` coins on ${dayjs(t.timestamp).format('DD/MM/YYYY')} by ${operator}`;
+                            return `> **${i + 1}.** [${type}] \`${amount}\` coins on ${dayjs(t.timestamp).format('DD/MM/YYYY')} by ${operator}`;
                         })
                         .join('\n')}`,
                     )
