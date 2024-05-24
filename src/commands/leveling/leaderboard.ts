@@ -1,5 +1,3 @@
-import { EmbedBuilder } from 'discord.js';
-import { config } from '../../config';
 import { supabase } from '../../services/supabase';
 import { Command } from '../../types';
 import { embeds, logger } from '../../utils';
@@ -33,19 +31,17 @@ export const command: Command = {
                 return;
             }
 
-            const embed = new EmbedBuilder()
-                .setColor(config.colors.blue)
-                .setTitle(`xp leaderboard for ${guild.name}`)
-                .setDescription(
-                    leaderboard
-                        ? leaderboard
-                              .map((e, i) => {
-                                  return `> **${i + 1}.** <@${e.user_id}> - level ${e.level} | xp: ${e.xp}`;
-                              })
-                              .join('\n')
-                        : 'leaderboard is empty',
-                )
-                .setTimestamp();
+            const embed = embeds.createEmbed(
+                `xp leaderboard for ${guild.name}`,
+                leaderboard
+                    ? leaderboard
+                          .map(
+                              (e, i) =>
+                                  `> **${i + 1}.** ${guild.members.cache.get(e.user_id)} - level ${e.level} | xp: ${e.xp}`,
+                          )
+                          .join('\n')
+                    : 'leaderboard is empty',
+            );
 
             await interaction.editReply({ embeds: [embed] });
         } catch (error) {

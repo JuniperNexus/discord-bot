@@ -1,0 +1,25 @@
+{
+    "Create new discord command": {
+        "prefix": "new-command",
+        "scope": "javascript,typescript",
+        "body": [
+            "import { Command } from '../../types';",
+            "import { embeds, logger } from '../../utils';",
+            "",
+            "export const command: Command = {",
+            "    name: '${TM_FILENAME/(.*)\\..+$/$1/}',",
+            "    description: '${2:command_description}',",
+            "",
+            "    execute: async (client, interaction) => {",
+            "        try {",
+            "            await interaction.reply({ embeds: [embeds.success('${3:action_description}...')] });",
+            "        } catch (error) {",
+            "            logger.error('Error executing ${TM_FILENAME/(.*)\\..+$/$1/} command:', error);",
+            "            await interaction.reply({ embeds: [embeds.error('failed to ${4:action_description}.')] });",
+            "        }",
+            "    },",
+            "};",
+        ],
+        "description": "Create a new discord command with embeds, and logging utility.",
+    },
+}

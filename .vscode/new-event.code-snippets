@@ -1,0 +1,19 @@
+{
+    "Create new discord event": {
+        "prefix": "new-event",
+        "scope": "javascript,typescript",
+        "body": [
+            "import { Event } from '../types';",
+            "import { logger } from '../utils';",
+            "",
+            "export const event: Event<'${TM_FILENAME/(.*)\\..+$/$1/}'> = {",
+            "    name: '${TM_FILENAME/(.*)\\..+$/$1/}',",
+            "",
+            "    execute: async interaction => {",
+            "        console.log(interaction);",
+            "    },",
+            "};",
+        ],
+        "description": "Create a discord event handler.",
+    },
+}

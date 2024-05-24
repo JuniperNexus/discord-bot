@@ -1,5 +1,4 @@
-import { EmbedBuilder } from 'discord.js';
-import { config, env, info } from '../../config';
+import { env, info } from '../../config';
 import { Command } from '../../types';
 import { embeds, logger } from '../../utils';
 import { clientUptime } from './uptime';
@@ -17,19 +16,10 @@ export const command: Command = {
             const users = client.guilds.cache.get(env.GUILD_ID)?.memberCount || 'unknown';
             const uptime = clientUptime(client.uptime as number);
 
-            const embed = new EmbedBuilder()
-                .setColor(config.colors.green)
-                .setTitle('info')
-                .setDescription(
-                    `> • name: ${name}
-                    > • description: ${description}
-                    > • version: ${version}
-                    > • developer: ${developer}
-                    > • users: ${users}
-                    > • uptime: ${uptime}
-                    `,
-                )
-                .setTimestamp();
+            const embed = embeds.createEmbed(
+                'info',
+                `> • name: ${name}\n> • description: ${description}\n> • version: ${version}\n> • developer: ${developer}\n> • users: ${users}\n> • uptime: ${uptime}`,
+            );
 
             await interaction.reply({ embeds: [embed] });
         } catch (error) {

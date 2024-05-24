@@ -1,5 +1,4 @@
-import { ApplicationCommandOptionType, EmbedBuilder } from 'discord.js';
-import { config } from '../../config';
+import { ApplicationCommandOptionType } from 'discord.js';
 import { supabase } from '../../services/supabase';
 import { Command } from '../../types';
 import { embeds, logger } from '../../utils';
@@ -43,12 +42,9 @@ export const command: Command = {
             const xp = userLevel.xp;
             const level = userLevel.level;
 
-            const embed = new EmbedBuilder()
-                .setColor(config.colors.blue)
-                .setTitle(`xp for ${user.username}`)
-                .setDescription(`${user}\n\n> • level: ${level}\n> • xp: ${xp}`)
-                .setThumbnail(user.displayAvatarURL({ forceStatic: false }))
-                .setTimestamp();
+            const embed = embeds
+                .createEmbed(`xp for ${user.username}`, `${user}\n\n> • level: ${level}\n> • xp: ${xp}`)
+                .setThumbnail(user.displayAvatarURL({ forceStatic: false }));
 
             await interaction.editReply({ embeds: [embed] });
         } catch (error) {

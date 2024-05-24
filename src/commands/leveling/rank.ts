@@ -1,5 +1,3 @@
-import { EmbedBuilder } from 'discord.js';
-import { config } from '../../config';
 import { supabase } from '../../services/supabase';
 import { Command } from '../../types';
 import { embeds, logger } from '../../utils';
@@ -47,12 +45,12 @@ export const command: Command = {
             const xp = userEntry.xp;
             const level = userEntry.level;
 
-            const embed = new EmbedBuilder()
-                .setColor(config.colors.blue)
-                .setTitle(`your rank in ${guild.name}`)
-                .setDescription(`${user}, you are ranked #${rank}\n\n> • level: ${level}\n> • xp: ${xp}`)
-                .setThumbnail(user.displayAvatarURL({ forceStatic: false }))
-                .setTimestamp();
+            const embed = embeds
+                .createEmbed(
+                    `your rank in ${guild.name}`,
+                    `${user}, you are ranked #${rank}\n\n> • level: ${level}\n> • xp: ${xp}`,
+                )
+                .setThumbnail(user.displayAvatarURL({ forceStatic: false }));
 
             await interaction.editReply({ embeds: [embed] });
         } catch (error) {

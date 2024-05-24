@@ -1,13 +1,5 @@
 import dayjs from 'dayjs';
-import {
-    ActionRowBuilder,
-    ApplicationCommandOptionType,
-    ButtonBuilder,
-    ButtonStyle,
-    ComponentType,
-    EmbedBuilder,
-} from 'discord.js';
-import { config } from '../../config';
+import { ActionRowBuilder, ApplicationCommandOptionType, ButtonBuilder, ButtonStyle, ComponentType } from 'discord.js';
 import { getUser } from '../../libs/supabase/get-user';
 import { supabase } from '../../services/supabase';
 import { Command } from '../../types';
@@ -53,23 +45,21 @@ export const command: Command = {
                 const start = page * ITEMS_PER_PAGE;
                 const end = start + ITEMS_PER_PAGE;
 
-                const embed = new EmbedBuilder()
-                    .setColor(config.colors.green)
-                    .setTitle(`${user.username}'s balance and transactions`)
-                    .setDescription(
-                        `balance: ${balance}\n
-                    transactions:
-                    ${transactions
-                        .slice(start, end)
-                        .map((t, i) => {
-                            const amount = t.amount || 0;
-                            const type = amount > 0 ? 'added' : 'removed';
+                const embed = embeds
+                    .createEmbed(
+                        `${user.username}'s balance and transactions`,
+                        `balance: ${balance}\n\ntransactions:\n${transactions
+                            .slice(start, end)
+                            .map((t, i) => {
+                                const amount = t.amount || 0;
+                                const type = amount > 0 ? 'added' : 'removed';
 
-                            const operator = interaction.guild?.members.cache.get(t.operator)?.nickname || 'unknown';
+                                const operator =
+                                    interaction.guild?.members.cache.get(t.operator)?.nickname || 'unknown';
 
-                            return `> **${i + 1}.** [${type}] \`${amount}\` coins on ${dayjs(t.timestamp).format('DD/MM/YYYY')} by ${operator}`;
-                        })
-                        .join('\n')}`,
+                                return `> **${i + 1}.** [${type}] \`${amount}\` coins on ${dayjs(t.timestamp).format('DD/MM/YYYY')} by ${operator}`;
+                            })
+                            .join('\n')}`,
                     )
                     .setFooter({ text: `page ${page + 1} of ${pages}` });
 

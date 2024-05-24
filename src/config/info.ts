@@ -1,5 +1,4 @@
 export const info = {
-    description:
-        'A feature-rich Discord bot designed specifically for the Juniper Nexus guild. Built with TypeScript and Discord.js.',
+    description: 'A feature-rich Discord bot for the Juniper Nexus guild.',
     version: '1.0.0',
 };

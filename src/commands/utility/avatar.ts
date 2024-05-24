@@ -1,5 +1,4 @@
-import { ApplicationCommandOptionType, EmbedBuilder } from 'discord.js';
-import { config } from '../../config';
+import { ApplicationCommandOptionType } from 'discord.js';
 import { Command } from '../../types';
 import { embeds, logger } from '../../utils';
 
@@ -35,11 +34,7 @@ export const command: Command = {
 
             const avatar = user.displayAvatarURL({ size: size as 256 | 512 | 1024 | 2048 | 4096 });
 
-            const embed = new EmbedBuilder()
-                .setColor(config.colors.green)
-                .setTitle(`${user.username}'s avatar`)
-                .setImage(avatar)
-                .setTimestamp();
+            const embed = embeds.createEmbed(`${user.username}'s avatar`, `${user}`).setImage(avatar);
 
             await interaction.reply({ embeds: [embed] });
         } catch (error) {

@@ -1,5 +1,4 @@
-import { ApplicationCommandOptionType, EmbedBuilder } from 'discord.js';
-import { config } from '../../config';
+import { ApplicationCommandOptionType } from 'discord.js';
 import { Command } from '../../types';
 import { embeds, logger } from '../../utils';
 
@@ -31,30 +30,17 @@ export const command: Command = {
                     return;
                 }
 
-                const embed = new EmbedBuilder()
-                    .setColor(config.colors.blue)
-                    .setTitle(`help for ${command.name}`)
-                    .setDescription(
-                        `${command.description}\n
-                    ${
-                        command.options
-                            ? `options:
-                    ${command.options.map(o => `> • ${o.name}: ${o.description}`).join('\n')}`
-                            : ''
-                    }
-                    `,
-                    )
-                    .setThumbnail(client.user!.displayAvatarURL())
-                    .setFooter({ text: `requested by ${interaction.user.tag}` });
+                const embed = embeds.createEmbed(
+                    `help for ${command.name}`,
+                    `${command.description}\n\n${command.options ? `options:\n${command.options.map(o => `> • ${o.name}: ${o.description}`).join('\n')}` : ''}`,
+                );
 
                 await interaction.reply({ embeds: [embed] });
             } else {
-                const embed = new EmbedBuilder()
-                    .setColor(config.colors.blue)
-                    .setTitle('list of commands')
-                    .setDescription(client.commands.map(c => `> • ${c.name}: ${c.description}`).join('\n'))
-                    .setThumbnail(client.user!.displayAvatarURL())
-                    .setFooter({ text: `requested by ${interaction.user.tag}` });
+                const embed = embeds.createEmbed(
+                    'list of commands',
+                    client.commands.map(c => `> • ${c.name}: ${c.description}`).join('\n'),
+                );
 
                 await interaction.reply({ embeds: [embed] });
             }

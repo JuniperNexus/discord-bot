@@ -19,7 +19,6 @@ pnpm-debug.log*
 *.tsbuildinfo
 
 # IDE/Editor specific files
-.vscode/
 .idea/
 .DS_Store
 Thumbs.db
