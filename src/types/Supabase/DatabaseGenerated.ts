@@ -108,6 +108,36 @@ export type Database = {
                 };
                 Relationships: [];
             };
+            voice_levels: {
+                Row: {
+                    guild_id: string;
+                    id: string;
+                    last_joined: string | null;
+                    level: number;
+                    time_spent: number;
+                    user_id: string;
+                    xp: number;
+                };
+                Insert: {
+                    guild_id: string;
+                    id?: string;
+                    last_joined?: string | null;
+                    level: number;
+                    time_spent: number;
+                    user_id: string;
+                    xp: number;
+                };
+                Update: {
+                    guild_id?: string;
+                    id?: string;
+                    last_joined?: string | null;
+                    level?: number;
+                    time_spent?: number;
+                    user_id?: string;
+                    xp?: number;
+                };
+                Relationships: [];
+            };
         };
         Views: {
             [_ in never]: never;
