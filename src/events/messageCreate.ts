@@ -1,16 +1,14 @@
-import { EmbedBuilder } from 'discord.js';
-import { config } from '../config';
 import { supabase } from '../services/supabase';
 import { Event } from '../types';
-import { logger } from '../utils';
+import { embeds, logger } from '../utils';
 
 export const event: Event<'messageCreate'> = {
     name: 'messageCreate',
 
     execute: async message => {
-        try {
-            if (message.author.bot || !message.guild) return;
+        if (message.author.bot || !message.guild) return;
 
+        try {
             const userId = message.author.id;
             const guildId = message.guild.id;
 
@@ -25,7 +23,7 @@ export const event: Event<'messageCreate'> = {
                 const { error } = await supabase.from('levels').insert({
                     user_id: userId,
                     guild_id: guildId,
-                    xp: 0,
+                    xp: 10,
                     level: 0,
                 });
 
@@ -43,22 +41,20 @@ export const event: Event<'messageCreate'> = {
                     leveledUp = true;
                 }
 
-                const { error: updateError } = await supabase
+                const { error: updateUserError } = await supabase
                     .from('levels')
                     .update({ xp: user.xp, level: user.level })
                     .eq('user_id', userId)
                     .eq('guild_id', guildId);
 
-                if (updateError) {
-                    logger.error('Error updating user:', updateError);
+                if (updateUserError) {
+                    logger.error('Error updating level:', updateUserError);
                     return;
                 }
 
                 if (leveledUp) {
-                    const embed = new EmbedBuilder()
-                        .setColor(config.colors.green)
-                        .setTitle('Level Up!')
-                        .setDescription(`${message.author}, you have leveled up to level ${user.level}!`)
+                    const embed = embeds
+                        .createEmbed('level up!', `${message.author}, you have leveled up to level ${user.level}!`)
                         .setTimestamp();
                     await message.channel.send({ embeds: [embed] });
                 }

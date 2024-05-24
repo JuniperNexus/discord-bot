@@ -4,7 +4,11 @@ import { Command } from './types';
 import { logger, registerCommands, registerEvents } from './utils';
 
 const client = new Client({
-    intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages],
+    intents: [
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        // GatewayIntentBits.GuildVoiceStates // TODO: Enable when leveling on voice channels is implemented
+    ],
 });
 
 client.commands = new Collection<string, Command>();

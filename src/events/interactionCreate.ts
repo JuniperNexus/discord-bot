@@ -10,10 +10,6 @@ export const event: Event<'interactionCreate'> = {
 
     execute: async interaction => {
         try {
-            if (interaction.guild && !interaction.member) {
-                await interaction.guild.members.fetch(interaction.user.id);
-            }
-
             if (!interaction.isChatInputCommand()) return;
 
             const { commandName, client, user } = interaction;
