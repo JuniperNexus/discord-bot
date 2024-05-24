@@ -4,7 +4,7 @@ import { Command } from '../../types';
 import { embeds, logger } from '../../utils';
 
 export const command: Command = {
-    name: 'serverinfo',
+    name: 'server',
     description: 'shows information about the server.',
 
     execute: async (client, interaction) => {
@@ -59,8 +59,8 @@ export const command: Command = {
 
             await interaction.reply({ embeds: [embed] });
         } catch (error) {
-            logger.error('Error executing serverinfo command:', error);
-            await interaction.reply({ embeds: [embeds.error('failed to show serverinfo.')] });
+            logger.error('Error executing server command:', error);
+            await interaction.reply({ embeds: [embeds.error('failed to show server info.')] });
         }
     },
 };

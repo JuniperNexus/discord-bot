@@ -1,7 +1,7 @@
 import { env, info } from '../../config';
 import { Command } from '../../types';
 import { embeds, logger } from '../../utils';
-import { clientUptime } from './uptime';
+import { clientUptime } from '../miscellaneous/uptime';
 
 export const command: Command = {
     name: 'info',
