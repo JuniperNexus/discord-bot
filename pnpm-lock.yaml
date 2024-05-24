@@ -24,8 +24,8 @@ importers:
         specifier: ^16.4.5
         version: 16.4.5
       supabase:
-        specifier: ^1.169.1
-        version: 1.169.1
+        specifier: ^1.169.4
+        version: 1.169.4
       zod:
         specifier: ^3.23.8
         version: 3.23.8
@@ -1266,6 +1266,7 @@ packages:
 
   inflight@1.0.6:
     resolution: {integrity: sha512-k92I/b08q4wvFscXCLvqfsHCrjrF7yiXsQuIVvVE7N82W3+aqpzuUdBbfhWcy/FZR3/4IgflMgKLOsvPDrGCJA==}
+    deprecated: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
 
   inherits@2.0.4:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
@@ -1903,8 +1904,8 @@ packages:
   summary@2.1.0:
     resolution: {integrity: sha512-nMIjMrd5Z2nuB2RZCKJfFMjgS3fygbeyGk9PxPPaJR1RIcyN9yn4A63Isovzm3ZtQuEkLBVgMdPup8UeLH7aQw==}
 
-  supabase@1.169.1:
-    resolution: {integrity: sha512-YpgPn8kM8cGZoGQtRpSz6jyh1Kz+bc60tOX0N3rtcRogGLvcwx/Q7aRtoJf1FPYohbt8IQl2p7NZHSbmdeHBoA==}
+  supabase@1.169.4:
+    resolution: {integrity: sha512-C7LtKrm+p1Rpx2D6ZE/BaSEYoUUhCyp/RdwMVEcCMI5pXnuYBC0ch6sib18mNCVKK5pQfSvKYtIY9pvErBU4Cw==}
     engines: {npm: '>=8'}
     hasBin: true
 
@@ -4020,7 +4021,7 @@ snapshots:
 
   summary@2.1.0: {}
 
-  supabase@1.169.1:
+  supabase@1.169.4:
     dependencies:
       bin-links: 4.0.4
       https-proxy-agent: 7.0.4
