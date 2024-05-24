@@ -7,13 +7,13 @@
         "prebuild": "rimraf dist",
         "build": "tsc",
         "database-types": "supabase gen types typescript --project-id \"qpmtvzspevuvztptbwwr\" --schema public > ./src/types/Supabase/DatabaseGenerated.ts",
-        "postdatabase-types": "pnpm format:fix",
-        "dev": "pnpm tsx --watch src/index.ts",
+        "postdatabase-types": "npm format:fix",
+        "dev": "npm tsx --watch src/index.ts",
         "format:fix": "prettier --write . --list-different",
-        "knip:fix": "pnpm knip --fix",
+        "knip:fix": "npm knip --fix",
         "lint": "eslint . --ext .ts",
         "serve": "node dist/index.js",
-        "start": "pnpm tsx src/index.ts"
+        "start": "npm tsx src/index.ts"
     },
     "dependencies": {
         "@supabase/supabase-js": "^2.43.4",
