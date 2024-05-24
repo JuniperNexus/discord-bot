@@ -8,10 +8,9 @@ export const event: Event<'messageCreate'> = {
     name: 'messageCreate',
 
     execute: async message => {
-        if (message.author.bot) return;
-        if (!message.guild) return;
-
         try {
+            if (message.author.bot || !message.guild) return;
+
             const userId = message.author.id;
             const guildId = message.guild.id;
 
@@ -61,7 +60,7 @@ export const event: Event<'messageCreate'> = {
                         .setTitle('Level Up!')
                         .setDescription(`${message.author}, you have leveled up to level ${user.level}!`)
                         .setTimestamp();
-                    message.channel.send({ embeds: [embed] });
+                    await message.channel.send({ embeds: [embed] });
                 }
             }
         } catch (error) {

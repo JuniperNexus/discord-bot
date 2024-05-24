@@ -1,13 +1,24 @@
 import { supabase } from '../../services/supabase';
+import { logger } from '../../utils';
 
 export const getEvent = async (eventName: string) => {
-    const { data, error } = await supabase.from('events').select('*').eq('event_name', eventName).single();
+    try {
+        const { data, error } = await supabase.from('events').select('*').eq('event_name', eventName).single();
 
-    return { data, error };
+        return { data, error };
+    } catch (error) {
+        logger.error('Error fetching event:', error);
+        return { data: null, error };
+    }
 };
 
 export const getEvents = async () => {
-    const { data, error } = await supabase.from('events').select('*');
+    try {
+        const { data, error } = await supabase.from('events').select('*');
 
-    return { data, error };
+        return { data, error };
+    } catch (error) {
+        logger.error('Error fetching event:', error);
+        return { data: null, error };
+    }
 };

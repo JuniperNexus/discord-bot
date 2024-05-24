@@ -8,24 +8,29 @@ export const event: Event<'ready'> = {
     once: true,
 
     execute: async client => {
-        const setActivity = () => {
-            const guild = client.guilds.cache.get(env.GUILD_ID);
-            const member = guild?.memberCount;
+        try {
+            const setActivity = () => {
+                const guild = client.guilds.cache.get(env.GUILD_ID);
+                const memberCount = guild?.memberCount ?? 0;
 
-            client.user?.setPresence({
-                activities: [
-                    {
-                        name: `${member} members | /help`,
-                        type: ActivityType.Watching,
-                    },
-                ],
-                status: 'idle',
-            });
-        };
+                client.user?.setPresence({
+                    activities: [
+                        {
+                            name: `${memberCount} members | /help`,
+                            type: ActivityType.Watching,
+                        },
+                    ],
+                    status: 'idle',
+                });
+            };
 
-        setInterval(setActivity, timer.second(15));
+            setInterval(setActivity, timer.second(15));
 
-        logger.info(`Logged in as ${client.user!.tag}`);
-        setActivity();
+            logger.info(`Logged in as ${client.user!.tag}`);
+
+            setActivity();
+        } catch (error) {
+            logger.error('Error executing ready event:', error);
+        }
     },
 };

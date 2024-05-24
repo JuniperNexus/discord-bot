@@ -21,42 +21,33 @@ export const command: Command = {
             const guild = interaction.guild;
             const member = guild?.members.cache.get(user.id);
 
-            const info = {
-                id: user.id,
-                nickname: member?.nickname,
-                avatar: user.avatar,
-                createdAt: user.createdAt,
-                joinedAt: member?.joinedAt,
-                color: member?.displayHexColor,
-                roles: member?.roles.cache.sort((a, b) => b.rawPosition - a.rawPosition),
-                permissions: member?.permissions.toArray(),
-            };
-
             const embed = new EmbedBuilder()
-                .setColor(info.color || config.colors.green)
+                .setColor(member?.displayHexColor || config.colors.green)
                 .setAuthor({ name: user.username, iconURL: user.displayAvatarURL({ forceStatic: false }) })
-                .setDescription(`<@${user.id}>`)
+                .setDescription(`${user}`)
                 .addFields(
-                    { name: 'id', value: info.id, inline: true },
-                    { name: 'nickname', value: info.nickname || 'none', inline: true },
+                    { name: 'id', value: user.id, inline: true },
+                    { name: 'nickname', value: member?.nickname || 'none', inline: true },
                     {
                         name: 'created at',
-                        value: info.createdAt
-                            ? `<t:${Math.floor(info.createdAt.getTime() / 1000)}:F> (<t:${Math.floor(info.createdAt.getTime() / 1000)}:R>)`
+                        value: user.createdAt
+                            ? `<t:${Math.floor(user.createdAt.getTime() / 1000)}:F> (<t:${Math.floor(user.createdAt.getTime() / 1000)}:R>)`
                             : 'unknown',
                     },
                     {
                         name: 'joined at',
-                        value: info.joinedAt
-                            ? `<t:${Math.floor(info.joinedAt.getTime() / 1000)}:F> (<t:${Math.floor(info.joinedAt.getTime() / 1000)}:R>)`
-                            : 'none',
+                        value: member?.joinedAt
+                            ? `<t:${Math.floor(member.joinedAt.getTime() / 1000)}:F> (<t:${Math.floor(member.joinedAt.getTime() / 1000)}:R>)`
+                            : 'unknown',
                     },
-                    { name: 'color', value: info.color || 'unknown', inline: true },
                     {
                         name: 'role(s)',
-                        value: info.roles ? info.roles.map(r => r.toString()).join(', ') : 'none',
+                        value: member?.roles ? member.roles.cache.map(r => r.toString()).join(', ') : 'none',
                     },
-                    { name: 'permission(s)', value: info.permissions ? info.permissions.join(', ') : 'none' },
+                    {
+                        name: 'permission(s)',
+                        value: member?.permissions ? member.permissions.toArray().join(', ') : 'none',
+                    },
                 )
                 .setThumbnail(user.displayAvatarURL({ forceStatic: false }))
                 .setTimestamp();

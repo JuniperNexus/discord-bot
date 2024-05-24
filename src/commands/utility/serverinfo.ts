@@ -11,78 +11,51 @@ export const command: Command = {
         try {
             const guild = interaction.guild!;
 
-            const info = {
-                id: guild.id,
-                name: guild.name,
-                icon: guild.iconURL(),
-                owner: {
-                    id: guild.ownerId,
-                    username: (await guild.fetchOwner()).user.username,
-                },
-                members: {
-                    count: guild.memberCount,
-                },
-                boost: {
-                    level: guild.premiumTier,
-                    count: guild.premiumSubscriptionCount,
-                },
-                roles: guild.roles.cache.size,
-                channels: guild.channels.cache.size,
-                createdAt: guild.createdAt,
-                emojis: guild.emojis.cache.map(e => `<${e.animated ? 'a' : ''}:${e.name}:${e.id}>`).join(''),
-                vanish: guild.vanityURLCode,
-            };
-
             const embed = new EmbedBuilder()
                 .setColor(config.colors.green)
-                .setAuthor({ name: info.name, iconURL: info.icon || undefined })
+                .setAuthor({ name: guild.name, iconURL: guild.iconURL() || undefined })
                 .addFields(
                     {
                         name: 'server owner',
-                        value: `<@${info.owner.id}> (${info.owner.username})`,
+                        value: `${guild.members.cache.get(guild.ownerId)} (${guild.ownerId})`,
                         inline: true,
                     },
-                    {
-                        name: 'id',
-                        value: info.id,
-                        inline: true,
-                    },
-                    {
-                        name: 'members',
-                        value: `${info.members.count} members`,
-                    },
+                    { name: 'id', value: guild.id, inline: true },
+                    { name: 'members', value: `${guild.memberCount} members` },
                     {
                         name: 'boost level',
-                        value: `${info.boost.count} boosts (level ${info.boost.level})`,
+                        value: `${guild.premiumSubscriptionCount} boosts (level ${guild.premiumTier})`,
                     },
                     {
                         name: 'roles',
-                        value: `${info.roles} roles`,
+                        value: `${guild.roles.cache.size} roles`,
                         inline: true,
                     },
                     {
                         name: 'channels',
-                        value: `${info.channels} channels`,
+                        value: `${guild.channels.cache.size} channels`,
                         inline: true,
                     },
                     {
                         name: 'created at',
-                        value: info.createdAt
-                            ? `<t:${Math.floor(info.createdAt.getTime() / 1000)}:F> (<t:${Math.floor(info.createdAt.getTime() / 1000)}:R>)`
+                        value: guild.createdAt
+                            ? `<t:${Math.floor(guild.createdAt.getTime() / 1000)}:F> (<t:${Math.floor(guild.createdAt.getTime() / 1000)}:R>)`
                             : 'unknown',
                     },
                     {
                         name: 'emojis',
-                        value: info.emojis.length ? info.emojis : 'none',
+                        value: guild.emojis
+                            ? guild.emojis.cache.map(e => `<${e.animated ? 'a' : ''}:${e.name}:${e.id}>`).join('')
+                            : 'none',
                     },
                     {
                         name: 'vanish code',
-                        value: info.vanish ? `https://discord.gg/${info.vanish}` : 'none',
+                        value: guild.vanityURLCode ? `https://discord.gg/${guild.vanityURLCode}` : 'none',
                     },
                 )
                 .setTimestamp();
 
-            if (info.icon) embed.setThumbnail(info.icon);
+            if (guild.iconURL()) embed.setThumbnail(guild.iconURL());
 
             await interaction.reply({ embeds: [embed] });
         } catch (error) {

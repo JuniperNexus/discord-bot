@@ -1,9 +1,7 @@
-import { EmbedBuilder, HexColorString } from 'discord.js';
+import { ColorResolvable, EmbedBuilder } from 'discord.js';
 import { config } from '../config';
 
-type Colors = HexColorString | number;
-
-const presets = (message: string, color: Colors, emoji: string) => {
+const presets = (message: string, color: ColorResolvable, emoji: string) => {
     return new EmbedBuilder().setColor(color).setDescription(`${emoji} ${message}`);
 };
 
@@ -13,8 +11,8 @@ export const embeds = {
     error: (message: string) => presets(message, config.colors.red, '🔥'),
     info: (message: string) => presets(message, config.colors.blue, '🤖'),
     warn: (message: string) => presets(message, config.colors.yellow, '⚠️'),
-    custom: (message: string, color: Colors, emoji: string) => presets(message, color, emoji),
-    createEmbed: (title: string, description: string, color?: Colors) => {
+    custom: (message: string, color: ColorResolvable, emoji: string) => presets(message, color, emoji),
+    createEmbed: (title: string, description: string, color?: ColorResolvable) => {
         return new EmbedBuilder()
             .setTitle(title)
             .setDescription(description)

@@ -18,32 +18,31 @@ export const command: Command = {
         const commandName = interaction.options.getString('command');
 
         try {
-            if (commandName) {
-                const command = client.commands.get(commandName);
-
-                if (!command) {
-                    await interaction.reply({
-                        embeds: [
-                            embeds.error(`command \`${commandName}\` not found. use \`/help\` for list of commands.`),
-                        ],
-                    });
-                    return;
-                }
-
-                const embed = embeds.createEmbed(
-                    `help for ${command.name}`,
-                    `${command.description}\n\n${command.options ? `options:\n${command.options.map(o => `> • ${o.name}: ${o.description}`).join('\n')}` : ''}`,
-                );
-
-                await interaction.reply({ embeds: [embed] });
-            } else {
+            if (!commandName) {
                 const embed = embeds.createEmbed(
                     'list of commands',
                     client.commands.map(c => `> • ${c.name}: ${c.description}`).join('\n'),
                 );
 
                 await interaction.reply({ embeds: [embed] });
+                return;
             }
+
+            const command = client.commands.get(commandName);
+
+            if (!command) {
+                await interaction.reply({
+                    embeds: [embeds.error(`command \`${commandName}\` not found. use \`/help\` for list of commands.`)],
+                });
+                return;
+            }
+
+            const embed = embeds.createEmbed(
+                `help for ${command.name}`,
+                `${command.description}\n\n${command.options ? `options:\n${command.options.map(o => `> • ${o.name}: ${o.description}`).join('\n')}` : ''}`,
+            );
+
+            await interaction.reply({ embeds: [embed] });
         } catch (error) {
             logger.error('Error to get help:', error);
             await interaction.reply({ embeds: [embeds.error('failed to get help.')] });
