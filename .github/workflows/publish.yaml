@@ -5,10 +5,6 @@ on:
     branches:
       - main
 
-permissions:
-  id-token: write
-  contents: read
-
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -16,7 +12,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: write
     steps:
       - name: 📥 Git Checkout
         uses: actions/checkout@v4.1.5
@@ -47,5 +44,5 @@ jobs:
           REPO: self
           BRANCH: production
           FOLDER: production
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
           MESSAGE: 'Build: {target-branch} ({sha})'
