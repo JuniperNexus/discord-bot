@@ -24,8 +24,6 @@ export const command: Command = {
                 .from('voice_levels')
                 .select('user_id, xp, level, time_spent')
                 .eq('guild_id', guild.id)
-                .order('level', { ascending: false })
-                .order('time_spent', { ascending: false })
                 .order('xp', { ascending: false })
                 .limit(LIMIT);
 

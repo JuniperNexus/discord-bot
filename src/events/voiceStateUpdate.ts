@@ -44,9 +44,16 @@ export const event: Event<'voiceStateUpdate'> = {
                     return;
                 }
 
-                const xp = parseInt(user.xp) + XP_PER_MINUTE * timeSpent;
-                const level = Math.floor(xp / XP_PER_LEVEL);
+                let xp = parseInt(user.xp) + XP_PER_MINUTE * timeSpent;
+                let level = parseInt(user.level);
                 const timeSpentInt = parseInt(user.time_spent) + timeSpent;
+
+                const xpRequired = XP_PER_LEVEL * (level + 1);
+
+                if (xp >= xpRequired) {
+                    xp = 0;
+                    level++;
+                }
 
                 const { error: upsertError } = await supabase.from('voice_levels').upsert({
                     user_id: userId,
