@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import { config } from '../config';
 import { supabase } from '../services/supabase';
 import { Event } from '../types';
 import { embeds, logger } from '../utils';
@@ -20,6 +21,23 @@ export const event: Event<'voiceStateUpdate'> = {
 
             if (!oldState.channelId && newState.channelId) {
                 mapUserJoin.set(userId, dayjs().toDate());
+
+                const { data: user } = await supabase
+                    .from('voice_levels')
+                    .select('xp, level, time_spent')
+                    .eq('user_id', userId)
+                    .eq('guild_id', guildId)
+                    .single();
+
+                if (!user) {
+                    await supabase.from('voice_levels').insert({
+                        user_id: userId,
+                        guild_id: guildId,
+                        xp: '0',
+                        level: '0',
+                        time_spent: '0',
+                    });
+                }
             }
 
             if (oldState.channelId && !newState.channelId) {
@@ -32,17 +50,14 @@ export const event: Event<'voiceStateUpdate'> = {
 
                 if (timeSpent <= 0) return;
 
-                const { data: user, error: fetchError } = await supabase
+                let { data: user } = await supabase
                     .from('voice_levels')
                     .select('xp, level, time_spent')
                     .eq('user_id', userId)
                     .eq('guild_id', guildId)
                     .single();
 
-                if (fetchError) {
-                    logger.error('Error fetching user level data:', fetchError);
-                    return;
-                }
+                user = user ?? { xp: '0', level: '0', time_spent: '0' };
 
                 let xp = parseInt(user.xp) + XP_PER_MINUTE * timeSpent;
                 let level = parseInt(user.level);
@@ -55,22 +70,30 @@ export const event: Event<'voiceStateUpdate'> = {
                     level++;
                 }
 
-                const { error: upsertError } = await supabase.from('voice_levels').upsert({
-                    user_id: userId,
-                    guild_id: guildId,
+                const updatatedUser = {
                     xp: xp.toString(),
                     level: level.toString(),
                     time_spent: timeSpentInt.toString(),
-                });
+                };
 
-                if (upsertError) {
-                    logger.error('Error upserting user level data:', upsertError);
+                const { error } = await supabase
+                    .from('voice_levels')
+                    .update(updatatedUser)
+                    .eq('user_id', userId)
+                    .eq('guild_id', guildId);
+
+                if (error) {
+                    logger.error('Error updating voice levels:', error);
                     return;
                 }
 
                 if (level > parseInt(user.level)) {
                     const embed = embeds
-                        .createEmbed('Level Up!', `${newState.member}, you have leveled up to level ${level}!`)
+                        .createEmbed(
+                            'Level Up!',
+                            `${newState.member}, you have leveled up to level ${level} in ${newState.guild.name}.`,
+                            config.colors.green,
+                        )
                         .setTimestamp();
                     try {
                         await newState.member.send({ embeds: [embed] });
