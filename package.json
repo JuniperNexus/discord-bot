@@ -14,7 +14,6 @@
         "knip": "knip",
         "knip:fix": "knip --fix",
         "lint": "eslint . --ext .ts",
-        "prestart": "pnpm build",
         "start": "node dist/index.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
