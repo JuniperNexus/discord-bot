@@ -1,6 +1,6 @@
 {
     "name": "discord-bot",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "description": "A feature-rich Discord bot for the Juniper Nexus guild.",
     "license": "MIT",
     "main": "src/index.ts",

@@ -112,26 +112,26 @@ export type Database = {
                 Row: {
                     guild_id: string;
                     id: string;
-                    level: number;
-                    time_spent: number;
+                    level: string;
+                    time_spent: string;
                     user_id: string;
-                    xp: number;
+                    xp: string;
                 };
                 Insert: {
                     guild_id: string;
                     id?: string;
-                    level: number;
-                    time_spent: number;
+                    level: string;
+                    time_spent: string;
                     user_id: string;
-                    xp: number;
+                    xp: string;
                 };
                 Update: {
                     guild_id?: string;
                     id?: string;
-                    level?: number;
-                    time_spent?: number;
+                    level?: string;
+                    time_spent?: string;
                     user_id?: string;
-                    xp?: number;
+                    xp?: string;
                 };
                 Relationships: [];
             };

@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.1.0] - 2024-05-25
+
+### Refactor
+
+-   Simplified XP and level calculation logic for voice state updates.
+-   Updated types in DatabaseGenerated.ts to use strings for XP, level, and time_spent.
+
 ## [2.0.0] - 2024-05-25
 
 ### Features

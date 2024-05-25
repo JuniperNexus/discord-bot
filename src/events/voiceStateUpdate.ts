@@ -44,28 +44,16 @@ export const event: Event<'voiceStateUpdate'> = {
                     return;
                 }
 
-                const xpEarned = Math.floor(timeSpent * XP_PER_MINUTE);
-                let xp = xpEarned;
-                let level = 0;
-                let timeSpentInt = Math.floor(timeSpent);
-
-                if (user) {
-                    xp += user.xp;
-                    level = user.level;
-                    timeSpentInt += user.time_spent;
-
-                    while (xp >= (level + 1) * XP_PER_LEVEL) {
-                        xp -= (level + 1) * XP_PER_LEVEL;
-                        level += 1;
-                    }
-                }
+                const xp = parseInt(user.xp) + XP_PER_MINUTE * timeSpent;
+                const level = Math.floor(xp / XP_PER_LEVEL);
+                const timeSpentInt = parseInt(user.time_spent) + timeSpent;
 
                 const { error: upsertError } = await supabase.from('voice_levels').upsert({
                     user_id: userId,
                     guild_id: guildId,
-                    xp,
-                    level,
-                    time_spent: timeSpentInt,
+                    xp: xp.toString(),
+                    level: level.toString(),
+                    time_spent: timeSpentInt.toString(),
                 });
 
                 if (upsertError) {
@@ -73,7 +61,7 @@ export const event: Event<'voiceStateUpdate'> = {
                     return;
                 }
 
-                if (xp === 0) {
+                if (level > parseInt(user.level)) {
                     const embed = embeds
                         .createEmbed('Level Up!', `${newState.member}, you have leveled up to level ${level}!`)
                         .setTimestamp();
