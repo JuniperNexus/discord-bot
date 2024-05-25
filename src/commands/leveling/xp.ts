@@ -41,7 +41,7 @@ export const command: Command = {
 
             const xp = userLevel.xp;
             const level = userLevel.level;
-            const time_spent = convertTime(userLevel.time_spent, 'minutes');
+            const time_spent = convertTime(parseInt(userLevel.time_spent), 'minutes');
 
             const embed = embeds
                 .createEmbed(

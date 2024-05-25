@@ -48,7 +48,7 @@ export const command: Command = {
             const userEntry = userRank[userIndex];
             const xp = userEntry.xp;
             const level = userEntry.level;
-            const time_spent = convertTime(userEntry.time_spent, 'minutes');
+            const time_spent = convertTime(parseInt(userEntry.time_spent), 'minutes');
 
             const embed = embeds
                 .createEmbed(
