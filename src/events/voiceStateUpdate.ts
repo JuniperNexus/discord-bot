@@ -18,73 +18,69 @@ export const event: Event<'voiceStateUpdate'> = {
             const guildId = newState.guild.id;
             const userId = newState.member.id;
 
-            // User joined voice channel
             if (!oldState.channelId && newState.channelId) {
-                mapUserJoin.set(userId, new Date());
+                mapUserJoin.set(userId, dayjs().toDate());
             }
 
-            // User left voice channel
             if (oldState.channelId && !newState.channelId) {
                 const timeJoined = mapUserJoin.get(userId);
                 if (!timeJoined) return;
 
-                const now = new Date();
+                const now = dayjs().toDate();
                 const timeSpent = dayjs(now).diff(dayjs(timeJoined), 'minute');
+                mapUserJoin.delete(userId);
 
-                const { data: user } = await supabase
+                if (timeSpent <= 0) return;
+
+                const { data: user, error: fetchError } = await supabase
                     .from('voice_levels')
-                    .select('*')
+                    .select('xp, level, time_spent')
                     .eq('user_id', userId)
                     .eq('guild_id', guildId)
                     .single();
 
-                const xp = Math.floor(timeSpent * XP_PER_MINUTE);
-                const level = 0;
-                const timeSpentInt = Math.floor(timeSpent);
+                if (fetchError) {
+                    logger.error('Error fetching user level data:', fetchError);
+                    return;
+                }
 
-                if (!user) {
-                    const { error } = await supabase.from('voice_levels').insert({
-                        user_id: userId,
-                        guild_id: guildId,
-                        xp: xp,
-                        level: level,
-                        time_spent: timeSpentInt,
-                    });
+                const xpEarned = Math.floor(timeSpent * XP_PER_MINUTE);
+                let xp = xpEarned;
+                let level = 0;
+                let timeSpentInt = Math.floor(timeSpent);
 
-                    if (error) {
-                        logger.error('Error inserting level:', error);
-                        return;
+                if (user) {
+                    xp += user.xp;
+                    level = user.level;
+                    timeSpentInt += user.time_spent;
+
+                    while (xp >= (level + 1) * XP_PER_LEVEL) {
+                        xp -= (level + 1) * XP_PER_LEVEL;
+                        level += 1;
                     }
-                } else {
-                    user.xp += xp;
-                    let leveledUp = false;
+                }
 
-                    if (user.xp >= (user.level + 1) * XP_PER_LEVEL) {
-                        user.level += 1;
-                        user.xp = 0;
-                        leveledUp = true;
-                    }
+                const { error: upsertError } = await supabase.from('voice_levels').upsert({
+                    user_id: userId,
+                    guild_id: guildId,
+                    xp,
+                    level,
+                    time_spent: timeSpentInt,
+                });
 
-                    const { error: updateUserError } = await supabase
-                        .from('voice_levels')
-                        .update({
-                            xp: user.xp,
-                            level: user.level,
-                            time_spent: timeSpentInt,
-                        })
-                        .eq('user_id', userId)
-                        .eq('guild_id', guildId);
+                if (upsertError) {
+                    logger.error('Error upserting user level data:', upsertError);
+                    return;
+                }
 
-                    if (updateUserError) {
-                        logger.error('Error updating level:', updateUserError);
-                        return;
-                    }
-
-                    if (leveledUp) {
-                        const embed = embeds
-                            .createEmbed('level up!', `${newState.member}, you have leveled up to level ${user.level}!`)
-                            .setTimestamp();
+                if (xp === 0) {
+                    const embed = embeds
+                        .createEmbed('Level Up!', `${newState.member}, you have leveled up to level ${level}!`)
+                        .setTimestamp();
+                    try {
                         await newState.member.send({ embeds: [embed] });
+                    } catch (msgError) {
+                        logger.error('Error sending level up message:', msgError);
                     }
                 }
             }

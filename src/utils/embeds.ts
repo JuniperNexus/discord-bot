@@ -1,6 +1,14 @@
 import { ColorResolvable, EmbedBuilder } from 'discord.js';
 import { config } from '../config';
 
+/**
+ * Creates an embed with a custom message, color, and emoji.
+ *
+ * @param message - The message to be displayed in the embed.
+ * @param color - The color of the embed.
+ * @param emoji - The emoji to be displayed before the message.
+ * @return The created embed.
+ */
 const presets = (message: string, color: ColorResolvable, emoji: string) => {
     return new EmbedBuilder().setColor(color).setDescription(`${emoji} ${message}`);
 };

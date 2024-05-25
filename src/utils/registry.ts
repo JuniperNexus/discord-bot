@@ -17,7 +17,6 @@ const loadCommands = async (client: Client): Promise<void> => {
             const commandFiles = fs.readdirSync(path.join(commandsDir, category));
 
             for (const file of commandFiles) {
-                if (!file.endsWith('.ts')) continue;
                 const commandPath = path.join(commandsDir, category, file);
                 const { command } = require(commandPath) as { command: Command };
 
@@ -42,7 +41,6 @@ const loadEvents = async (client: Client): Promise<void> => {
         const eventFiles = fs.readdirSync(eventsDir);
 
         for (const file of eventFiles) {
-            if (file.endsWith('.bak')) continue;
             const eventPath = path.join(eventsDir, file);
             const { event } = require(eventPath) as { event: Event<keyof ClientEvents> };
 

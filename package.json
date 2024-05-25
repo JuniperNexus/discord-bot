@@ -1,19 +1,22 @@
 {
     "name": "discord-bot",
-    "version": "1.0.0",
+    "version": "1.1.0",
+    "description": "A feature-rich Discord bot for the Juniper Nexus guild.",
     "license": "MIT",
     "main": "src/index.ts",
     "scripts": {
         "prebuild": "rimraf dist",
         "build": "tsc",
         "database-types": "supabase gen types typescript --project-id \"qpmtvzspevuvztptbwwr\" --schema public > ./src/types/Supabase/DatabaseGenerated.ts",
-        "postdatabase-types": "npm run format:fix",
-        "dev": "npm run tsx --watch src/index.ts",
+        "postdatabase-types": "pnpm format:fix",
+        "dev": "tsx --watch src/index.ts",
         "format:fix": "prettier --write . --list-different",
-        "knip:fix": "npm run knip --fix",
+        "knip": "knip",
+        "knip:fix": "knip --fix",
         "lint": "eslint . --ext .ts",
-        "serve": "node dist/index.js",
-        "start": "npm run build && npm run serve"
+        "prestart": "pnpm build",
+        "start": "node dist/index.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
     },
     "dependencies": {
         "@supabase/supabase-js": "^2.43.4",
@@ -21,7 +24,7 @@
         "dayjs": "^1.11.11",
         "discord.js": "^14.15.2",
         "dotenv": "^16.4.5",
-        "supabase": "^1.169.4",
+        "supabase": "^1.169.5",
         "zod": "^3.23.8"
     },
     "devDependencies": {

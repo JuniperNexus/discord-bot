@@ -2,12 +2,14 @@ import { supabase } from '../../services/supabase';
 import { Command } from '../../types';
 import { embeds, logger } from '../../utils';
 
+const LIMIT = 10;
+
 export const command: Command = {
-    name: 'leader-board',
-    description: "displays the server's xp leader-board.",
+    name: 'leaderboard',
+    description: "displays the server's xp leaderboard.",
 
     execute: async (client, interaction) => {
-        await interaction.reply({ embeds: [embeds.loading('fetching leader-board...')], fetchReply: true });
+        await interaction.reply({ embeds: [embeds.loading('fetching leaderboard...')], fetchReply: true });
 
         try {
             const guild = interaction.guild;
@@ -18,35 +20,36 @@ export const command: Command = {
             }
 
             const { data: leaderBoard, error } = await supabase
-                .from('levels')
+                .from('voice_levels')
                 .select('user_id, xp, level')
                 .eq('guild_id', guild.id)
                 .order('level', { ascending: false })
+                .order('time_spent', { ascending: false })
                 .order('xp', { ascending: false })
-                .limit(10);
+                .limit(LIMIT);
 
             if (error) {
-                logger.error('Error fetching leader-board:', error);
-                await interaction.editReply({ embeds: [embeds.error('failed to fetch leader-board.')] });
+                logger.error('Error fetching leaderboard:', error);
+                await interaction.editReply({ embeds: [embeds.error('failed to fetch leaderboard.')] });
                 return;
             }
 
             const embed = embeds.createEmbed(
-                `xp leader-board for ${guild.name}`,
+                `xp leaderboard for ${guild.name}`,
                 leaderBoard
                     ? leaderBoard
                           .map(
                               (e, i) =>
-                                  `> **${i + 1}.** ${guild.members.cache.get(e.user_id)} - level ${e.level} | xp: ${e.xp}`,
+                                  `> **${i + 1}.** ${guild.members.cache.get(e.user_id)?.displayName} - level ${e.level} | xp: ${e.xp}`,
                           )
                           .join('\n')
-                    : 'leader-board is empty',
+                    : 'leaderboard is empty',
             );
 
             await interaction.editReply({ embeds: [embed] });
         } catch (error) {
-            logger.error('Error fetching leader-board:', error);
-            await interaction.editReply({ embeds: [embeds.error('Failed to fetch leader-board.')] });
+            logger.error('Error fetching leaderboard:', error);
+            await interaction.editReply({ embeds: [embeds.error('Failed to fetch leaderboard.')] });
         }
     },
 };

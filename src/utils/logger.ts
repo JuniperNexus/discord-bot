@@ -5,6 +5,15 @@ interface Preset {
     label: string;
 }
 
+/**
+ * Creates a preset function that logs a message with a symbol and label.
+ *
+ * @param preset - An object containing a symbol and label.
+ * @param preset.symbol - The symbol to be displayed in the log message.
+ * @param preset.label - The label to be displayed in the log message.
+ * @param message - The message to be displayed in the log message.
+ * @return This function does not return a value.
+ */
 const preset =
     ({ symbol, label }: Preset) =>
     (message: string) =>

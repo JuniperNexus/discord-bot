@@ -24,8 +24,8 @@ importers:
         specifier: ^16.4.5
         version: 16.4.5
       supabase:
-        specifier: ^1.169.4
-        version: 1.169.4
+        specifier: ^1.169.5
+        version: 1.169.5
       zod:
         specifier: ^3.23.8
         version: 3.23.8
@@ -1904,8 +1904,8 @@ packages:
   summary@2.1.0:
     resolution: {integrity: sha512-nMIjMrd5Z2nuB2RZCKJfFMjgS3fygbeyGk9PxPPaJR1RIcyN9yn4A63Isovzm3ZtQuEkLBVgMdPup8UeLH7aQw==}
 
-  supabase@1.169.4:
-    resolution: {integrity: sha512-C7LtKrm+p1Rpx2D6ZE/BaSEYoUUhCyp/RdwMVEcCMI5pXnuYBC0ch6sib18mNCVKK5pQfSvKYtIY9pvErBU4Cw==}
+  supabase@1.169.5:
+    resolution: {integrity: sha512-68J90JPMCLbEZpu7GrEqPDfOLqcgT4GuGScMg6EKV+4Up6/LtBxzRLEpowbHQjKeiXGLDgTAX+6knjgxOMAobA==}
     engines: {npm: '>=8'}
     hasBin: true
 
@@ -4021,7 +4021,7 @@ snapshots:
 
   summary@2.1.0: {}
 
-  supabase@1.169.4:
+  supabase@1.169.5:
     dependencies:
       bin-links: 4.0.4
       https-proxy-agent: 7.0.4

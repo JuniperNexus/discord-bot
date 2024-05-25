@@ -112,7 +112,6 @@ export type Database = {
                 Row: {
                     guild_id: string;
                     id: string;
-                    last_joined: string | null;
                     level: number;
                     time_spent: number;
                     user_id: string;
@@ -121,7 +120,6 @@ export type Database = {
                 Insert: {
                     guild_id: string;
                     id?: string;
-                    last_joined?: string | null;
                     level: number;
                     time_spent: number;
                     user_id: string;
@@ -130,7 +128,6 @@ export type Database = {
                 Update: {
                     guild_id?: string;
                     id?: string;
-                    last_joined?: string | null;
                     level?: number;
                     time_spent?: number;
                     user_id?: string;

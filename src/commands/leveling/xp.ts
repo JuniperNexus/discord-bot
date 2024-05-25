@@ -1,7 +1,7 @@
 import { ApplicationCommandOptionType } from 'discord.js';
 import { supabase } from '../../services/supabase';
 import { Command } from '../../types';
-import { embeds, logger } from '../../utils';
+import { convertTime, embeds, logger } from '../../utils';
 
 export const command: Command = {
     name: 'xp',
@@ -28,8 +28,8 @@ export const command: Command = {
             }
 
             const { data: userLevel } = await supabase
-                .from('levels')
-                .select('*')
+                .from('voice_levels')
+                .select('xp, level, time_spent')
                 .eq('user_id', user.id)
                 .eq('guild_id', guild.id)
                 .single();
@@ -41,9 +41,13 @@ export const command: Command = {
 
             const xp = userLevel.xp;
             const level = userLevel.level;
+            const time_spent = convertTime(userLevel.time_spent, 'minutes');
 
             const embed = embeds
-                .createEmbed(`xp for ${user.username}`, `${user}\n\n> • level: ${level}\n> • xp: ${xp}`)
+                .createEmbed(
+                    `xp for ${user.username}`,
+                    `${user}\n\n> • level: ${level}\n> • xp: ${xp}\n> • time spent: ${time_spent}`,
+                )
                 .setThumbnail(user.displayAvatarURL({ forceStatic: false }));
 
             await interaction.editReply({ embeds: [embed] });
