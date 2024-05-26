@@ -67,7 +67,7 @@ export const command: Command = {
             });
 
             if (error) {
-                logger.error('Error to give coins:', error);
+                logger.error('Error to give coins:', error.details);
                 await interaction.editReply({ embeds: [embeds.error('failed to give coins.')] });
                 return;
             }

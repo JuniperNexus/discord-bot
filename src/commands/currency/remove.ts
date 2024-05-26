@@ -51,7 +51,7 @@ export const command: Command = {
             });
 
             if (error) {
-                logger.error('Error to remove coins:', error);
+                logger.error('Error to remove coins:', error.details);
                 await interaction.editReply({ embeds: [embeds.error('failed to remove coins.')] });
                 return;
             }

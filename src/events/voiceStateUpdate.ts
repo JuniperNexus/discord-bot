@@ -30,13 +30,18 @@ export const event: Event<'voiceStateUpdate'> = {
                     .single();
 
                 if (!user) {
-                    await supabase.from('voice_levels').insert({
+                    const { error } = await supabase.from('voice_levels').insert({
                         user_id: userId,
                         guild_id: guildId,
                         xp: '0',
                         level: '0',
                         time_spent: '0',
                     });
+
+                    if (error) {
+                        logger.error('Error inserting user:', error.details);
+                        return;
+                    }
                 }
             }
 
@@ -83,7 +88,7 @@ export const event: Event<'voiceStateUpdate'> = {
                     .eq('guild_id', guildId);
 
                 if (error) {
-                    logger.error('Error updating voice levels:', error);
+                    logger.error('Error updating voice levels:', error.details);
                     return;
                 }
 
@@ -95,6 +100,7 @@ export const event: Event<'voiceStateUpdate'> = {
                             config.colors.green,
                         )
                         .setTimestamp();
+
                     try {
                         await newState.member.send({ embeds: [embed] });
                     } catch (msgError) {

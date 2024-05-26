@@ -27,6 +27,7 @@ export const command: Command = {
                 .from('coins')
                 .select('amount, timestamp, operator')
                 .eq('user_id', user.id);
+
             if (!transactions) {
                 await interaction.editReply({ embeds: [embeds.error('no transactions found.')] });
                 return;

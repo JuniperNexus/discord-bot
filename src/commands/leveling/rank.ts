@@ -27,7 +27,7 @@ export const command: Command = {
                 .order('xp');
 
             if (error) {
-                logger.error('Error fetching user rank:', error);
+                logger.error('Error fetching user rank:', error.details);
                 await interaction.editReply({ embeds: [embeds.error('failed to fetch user rank.')] });
                 return;
             }

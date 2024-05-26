@@ -27,7 +27,7 @@ export const command: Command = {
                 .order('xp');
 
             if (error) {
-                logger.error('Error fetching leaderboard:', error);
+                logger.error('Error fetching leaderboard:', error.details);
                 await interaction.editReply({ embeds: [embeds.error('failed to fetch leaderboard.')] });
                 return;
             }

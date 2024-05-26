@@ -5,18 +5,21 @@ All notable changes to this project will be documented in this file.
 ## [2.3.0] - 2024-05-26
 
 ### Refactor
-- Updated `rank.ts` and `xp.ts` to parse `time_spent` from string to integer using `parseInt()`.
-- Ensured consistent `time_spent` calculation across leveling commands.
-- Updated `leaderboard.ts` and `rank.ts` to remove unnecessary `time_spent` sorting.
-- Dynamically calculate user level based on XP in `voiceStateUpdate.ts`.
+
+-   Updated `rank.ts` and `xp.ts` to parse `time_spent` from string to integer using `parseInt()`.
+-   Ensured consistent `time_spent` calculation across leveling commands.
+-   Updated `leaderboard.ts` and `rank.ts` to remove unnecessary `time_spent` sorting.
+-   Dynamically calculate user level based on XP in `voiceStateUpdate.ts`.
 
 ### Enhancements
-- Improved error handling in fetching and updating user data in `voiceStateUpdate.ts`.
-- Updated `ready.ts` to periodically update user information in the database.
-- Improved message formatting and added guild name in level up messages.
+
+-   Improved error handling in fetching and updating user data in `voiceStateUpdate.ts`.
+-   Updated `ready.ts` to periodically update user information in the database.
+-   Improved message formatting and added guild name in level up messages.
 
 ### Logging
-- Enhanced error logging with detailed timestamp in `logger.ts`.
+
+-   Enhanced error logging with detailed timestamp in `logger.ts`.
 
 ## [2.2.0] - 2024-05-25
 

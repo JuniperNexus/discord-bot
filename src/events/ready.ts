@@ -53,7 +53,7 @@ export const event: Event<'ready'> = {
                     });
 
                     if (error) {
-                        logger.error('Error updating user:', error);
+                        logger.error('Error updating user:', error.details);
                     }
                 }
             };

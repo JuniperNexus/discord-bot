@@ -8,6 +8,6 @@ export const getUser = async (userId: string) => {
         return { data };
     } catch (error) {
         logger.error('Error fetching user:', error);
-        return { data: null, error: error };
+        return { data: null, error };
     }
 };
