@@ -48,10 +48,11 @@ export const command: Command = {
                 `xp leaderboard for ${guild.name}`,
                 leaderBoard
                     ? leaderBoard
-                          .map(
-                              (e, i) =>
-                                  `> **${i + 1}.** ${guild.members.cache.get(e.user_id)?.displayName} - level ${e.level} | xp: ${e.xp}`,
-                          )
+                          .map((e, i) => {
+                              const user = guild.members.cache.get(e.user_id);
+
+                              return `> **${i + 1}.** ${user?.nickname || user?.user.username} - level ${e.level} | xp: ${e.xp}`;
+                          })
                           .join('\n')
                     : 'leaderboard is empty',
             );

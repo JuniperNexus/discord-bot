@@ -64,6 +64,7 @@ export const event: Event<'ready'> = {
             logger.info(`Logged in as ${client.user!.tag}`);
 
             setActivity();
+            updateGuildMember();
         } catch (error) {
             logger.error('Error executing ready event:', error);
         }
