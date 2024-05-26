@@ -1,9 +1,6 @@
 import dayjs from 'dayjs';
-import duration from 'dayjs/plugin/duration';
 import { Command } from '../../types';
 import { embeds, logger } from '../../utils';
-
-dayjs.extend(duration);
 
 export const clientUptime = (uptimeMs: number) => {
     const durationObj = dayjs.duration(uptimeMs);

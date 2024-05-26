@@ -2,24 +2,43 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.3.0] - 2024-05-26
+
+### Refactor
+- Updated `rank.ts` and `xp.ts` to parse `time_spent` from string to integer using `parseInt()`.
+- Ensured consistent `time_spent` calculation across leveling commands.
+- Updated `leaderboard.ts` and `rank.ts` to remove unnecessary `time_spent` sorting.
+- Dynamically calculate user level based on XP in `voiceStateUpdate.ts`.
+
+### Enhancements
+- Improved error handling in fetching and updating user data in `voiceStateUpdate.ts`.
+- Updated `ready.ts` to periodically update user information in the database.
+- Improved message formatting and added guild name in level up messages.
+
+### Logging
+- Enhanced error logging with detailed timestamp in `logger.ts`.
+
 ## [2.2.0] - 2024-05-25
 
 ### Refactor
-- Updated rank.ts and xp.ts to parse time_spent from string to integer using parseInt().
-- Ensures consistency in time_spent calculation across leveling commands.
-- Updated leaderboard.ts and rank.ts to remove unnecessary time_spent sorting.
-- Refactored voiceStateUpdate.ts to dynamically calculate user level based on XP.
-- Ensured consistency and efficiency in level calculation across commands and events.
+
+-   Updated rank.ts and xp.ts to parse time_spent from string to integer using parseInt().
+-   Ensures consistency in time_spent calculation across leveling commands.
+-   Updated leaderboard.ts and rank.ts to remove unnecessary time_spent sorting.
+-   Refactored voiceStateUpdate.ts to dynamically calculate user level based on XP.
+-   Ensured consistency and efficiency in level calculation across commands and events.
 
 ### Fix
-- Updated voiceStateUpdate.ts to handle null user data when fetching from the database.
+
+-   Updated voiceStateUpdate.ts to handle null user data when fetching from the database.
 
 ### Feat
-- Updated voiceStateUpdate.ts to ensure that user data exists in the database when handling voice state updates.
-- Added logic to check if user data exists; if not, initializes it with default values.
-- Updated the upsert logic to an update operation for existing users.
-- Enhanced logging for errors during database operations.
-- Improved level up message formatting and added guild name for clarity.
+
+-   Updated voiceStateUpdate.ts to ensure that user data exists in the database when handling voice state updates.
+-   Added logic to check if user data exists; if not, initializes it with default values.
+-   Updated the upsert logic to an update operation for existing users.
+-   Enhanced logging for errors during database operations.
+-   Improved level up message formatting and added guild name for clarity.
 
 ## [2.1.0] - 2024-05-25
 

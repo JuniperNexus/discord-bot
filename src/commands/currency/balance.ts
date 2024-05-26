@@ -1,6 +1,5 @@
 import dayjs from 'dayjs';
 import { ActionRowBuilder, ApplicationCommandOptionType, ButtonBuilder, ButtonStyle, ComponentType } from 'discord.js';
-import { getUser } from '../../libs/supabase/get-user';
 import { supabase } from '../../services/supabase';
 import { Command } from '../../types';
 import { embeds, logger, timer } from '../../utils';
@@ -24,13 +23,10 @@ export const command: Command = {
         try {
             const user = interaction.options.getUser('user') || interaction.user;
 
-            const { data } = await getUser(user.id);
-            if (!data) {
-                await interaction.editReply({ embeds: [embeds.error('user not found in database.')] });
-                return;
-            }
-
-            const { data: transactions } = await supabase.from('coins').select('*').eq('user_id', data.user_id);
+            const { data: transactions } = await supabase
+                .from('coins')
+                .select('amount, timestamp, operator')
+                .eq('user_id', user.id);
             if (!transactions) {
                 await interaction.editReply({ embeds: [embeds.error('no transactions found.')] });
                 return;
@@ -54,10 +50,12 @@ export const command: Command = {
                                 const amount = t.amount || 0;
                                 const type = amount > 0 ? 'added' : 'removed';
 
-                                const operator =
-                                    interaction.guild?.members.cache.get(t.operator)?.nickname || 'unknown';
+                                const operatorUser = interaction.guild?.members.cache.get(t.operator);
+                                const operator = operatorUser?.nickname || operatorUser?.user.username || 'unknown';
 
-                                return `> **${i + 1}.** [${type}] \`${amount}\` coins on ${dayjs(t.timestamp).format('DD/MM/YYYY')} by ${operator}`;
+                                return `> **${i + 1}.** [${type}] \`${amount}\` coins on ${dayjs(t.timestamp).format(
+                                    'DD/MM/YYYY',
+                                )} by ${operator}`;
                             })
                             .join('\n')}`,
                     )

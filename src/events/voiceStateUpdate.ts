@@ -13,7 +13,7 @@ export const event: Event<'voiceStateUpdate'> = {
     name: 'voiceStateUpdate',
 
     execute: async (oldState, newState) => {
-        if (oldState.channelId === newState.channelId || !newState.member) return;
+        if (oldState.channelId === newState.channelId || !newState.member || newState.member.user.bot) return;
 
         try {
             const guildId = newState.guild.id;

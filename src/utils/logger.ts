@@ -1,4 +1,14 @@
 import clc from 'cli-color';
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
+
+dayjs.extend(duration);
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+dayjs.tz.setDefault('Asia/Jakarta');
 
 interface Preset {
     symbol: string;
@@ -17,7 +27,7 @@ interface Preset {
 const preset =
     ({ symbol, label }: Preset) =>
     (message: string) =>
-        console.log(`[${symbol}] ${clc.cyan(new Date().toISOString())} [${label}] ${message}`);
+        console.log(`[${symbol}] ${clc.cyan(dayjs().format('YYYY-MM-DD HH:mm:ss'))} [${label}] ${message}`);
 
 export const logger = {
     info: preset({ symbol: clc.green('+'), label: clc.green('INFO') }),
@@ -25,11 +35,11 @@ export const logger = {
     error: (message: string, error: Error | string | unknown) => {
         const errorMessage = error instanceof Error ? `${error.name}: ${error.message}\n${error.stack}` : `${error}`;
         console.log(
-            `[${clc.red('-')}] ${clc.cyan(new Date().toISOString())} [${clc.red('ERROR')}] ${message}, ${errorMessage}`,
+            `[${clc.red('-')}] ${clc.cyan(dayjs().format('YYYY-MM-DD HH:mm:ss'))} [${clc.red('ERROR')}] ${message}${errorMessage ? `\n${errorMessage}` : ''}`,
         );
     },
     debug: (message: string, stack: string) =>
         console.log(
-            `[${clc.blue('?')}] ${clc.cyan(new Date().toISOString())} [${clc.blue('DEBUG')}] ${message}\n${stack}`,
+            `[${clc.blue('?')}] ${clc.cyan(dayjs().format('YYYY-MM-DD HH:mm:ss'))} [${clc.blue('DEBUG')}] ${message}\n${stack}`,
         ),
 };

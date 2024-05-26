@@ -20,18 +20,22 @@ export const command: Command = {
                 return;
             }
 
-            const { data: userRank, error } = await supabase
+            const { data, error } = await supabase
                 .from('voice_levels')
                 .select('user_id, xp, level, time_spent')
                 .eq('guild_id', guild.id)
-                .order('xp', { ascending: false })
-                .limit(LIMIT);
+                .order('xp');
 
             if (error) {
                 logger.error('Error fetching user rank:', error);
                 await interaction.editReply({ embeds: [embeds.error('failed to fetch user rank.')] });
                 return;
             }
+
+            const userRank = data
+                .map(e => ({ ...e, xp: parseInt(e.xp) }))
+                .sort((a, b) => b.xp - a.xp)
+                .slice(0, LIMIT);
 
             const userIndex = userRank.findIndex(entry => entry.user_id === user.id);
 

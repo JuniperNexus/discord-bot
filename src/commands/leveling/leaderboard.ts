@@ -1,3 +1,4 @@
+import { config } from '../../config';
 import { supabase } from '../../services/supabase';
 import { Command } from '../../types';
 import { embeds, logger } from '../../utils';
@@ -19,16 +20,27 @@ export const command: Command = {
                 return;
             }
 
-            const { data: leaderBoard, error } = await supabase
+            const { data, error } = await supabase
                 .from('voice_levels')
                 .select('user_id, xp, level')
                 .eq('guild_id', guild.id)
-                .order('xp', { ascending: false })
-                .limit(LIMIT);
+                .order('xp');
 
             if (error) {
                 logger.error('Error fetching leaderboard:', error);
                 await interaction.editReply({ embeds: [embeds.error('failed to fetch leaderboard.')] });
+                return;
+            }
+
+            const leaderBoard = data
+                .map(e => ({ ...e, xp: parseInt(e.xp) }))
+                .sort((a, b) => b.xp - a.xp)
+                .slice(0, LIMIT);
+
+            if (leaderBoard.length === 0) {
+                await interaction.editReply({
+                    embeds: [embeds.custom('leaderboard is empty', config.colors.red, '🏆')],
+                });
                 return;
             }
 

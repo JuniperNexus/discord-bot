@@ -11,7 +11,7 @@ export const command: Command = {
             name: 'user',
             description: 'the user to show xp for.',
             type: ApplicationCommandOptionType.User,
-            required: true,
+            required: false,
         },
     ],
 
@@ -19,7 +19,7 @@ export const command: Command = {
         await interaction.reply({ embeds: [embeds.loading('fetching xp...')], fetchReply: true });
 
         try {
-            const user = interaction.options.getUser('user', true);
+            const user = interaction.options.getUser('user') || interaction.user;
             const guild = interaction.guild;
 
             if (!guild) {

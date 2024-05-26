@@ -10,7 +10,7 @@ import { config } from '../config';
  * @return The created embed.
  */
 const presets = (message: string, color: ColorResolvable, emoji: string) => {
-    return new EmbedBuilder().setColor(color).setDescription(`${emoji} ${message}`);
+    return new EmbedBuilder().setColor(color).setDescription(`\`${emoji}\`: ${message}`);
 };
 
 export const embeds = {
