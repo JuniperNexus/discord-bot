@@ -14,22 +14,24 @@
 -   [ ] **/meme** - Get a random meme from a meme subreddit.
 -   [ ] **/quote** - Get an inspirational quote.
 -   [ ] **/joke** - Get a random joke.
--   [ ] **/coinflip** - Flip a coin.
--   [ ] **/dice** - Roll a six-sided die.
+-   [x] **/coinflip** - Flip a coin.
+-   [x] **/dice** - Roll a six-sided die.
 -   [ ] **/8ball <question>** - Ask the magic 8-ball a question.
--   [ ] **/say <message>** - Make the bot say something.
+-   [x] **/say <message>** - Make the bot say something.
 
 ## Utility Commands
 
--   [ ] **/weather <location>** - Get the weather forecast for a location.
--   [ ] **/time <location>** - Get the current time of a location.
+-   [x] **/weather <location>** - Get the weather forecast for a location.
 -   [ ] **/poll <question>** - Create a poll for users to vote on.
 -   [ ] **/remindme <time> <message>** - Remind you of something after a specified time.
 -   [ ] **/translate <language> <text>** - Translate text to a specified language.
+-   [x] **/ai [chat|reset]** - Get an AI response.
+    -   [x] **/ai chat <message> <token>** - Get an AI response with a token
+    -   [x] **/ai reset** - Reset the AI chat history.
 
 ## Moderation Commands
 
--   [ ] **/kick <@user> [reason]** - Kick a user from the server.
+-   [x] **/kick <@user> [reason]** - Kick a user from the server.
 -   [ ] **/ban <@user> [reason]** - Ban a user from the server.
 -   [ ] **/mute <@user> [reason]** - Mute a user.
 -   [ ] **/unmute <@user>** - Unmute a user.
