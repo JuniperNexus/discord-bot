@@ -5,12 +5,14 @@ All notable changes to this project will be documented in this file.
 ## [3.0.0] - 2024-05-28
 
 ### Feat
-- Added `coinflip`, `dice`, `rps`, and `say` commands for fun interactions.
-- Implemented `clear` and `kick` commands for moderation purposes.
-- Introduced `ai chat` and `weather` commands for utility functions.
+
+-   Added `coinflip`, `dice`, `rps`, and `say` commands for fun interactions.
+-   Implemented `clear` and `kick` commands for moderation purposes.
+-   Introduced `ai chat` and `weather` commands for utility functions.
 
 ### Breaking Changes
-- Updated dependencies and configuration for new commands.
+
+-   Updated dependencies and configuration for new commands.
 
 ## [2.3.0] - 2024-05-26
 
