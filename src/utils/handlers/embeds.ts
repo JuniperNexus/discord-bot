@@ -1,5 +1,5 @@
 import { ColorResolvable, EmbedBuilder } from 'discord.js';
-import { config } from '../config';
+import { config } from '../../config';
 
 /**
  * Creates an embed with a custom message, color, and emoji.

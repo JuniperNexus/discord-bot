@@ -1,14 +1,14 @@
 import fs from 'fs';
 import path from 'path';
 import { Client, ClientEvents, REST, RESTPostAPIApplicationCommandsJSONBody, Routes } from 'discord.js';
-import { env } from '../config';
-import { Command, Event } from '../types';
-import { logger } from '../utils';
+import { logger } from '..';
+import { env } from '../../config';
+import { Command, Event } from '../../types';
 
 export const commandData: RESTPostAPIApplicationCommandsJSONBody[] = [];
 
 const loadCommands = async (client: Client): Promise<void> => {
-    const commandsDir = path.join(__dirname, '../commands');
+    const commandsDir = path.join(__dirname, '..', '..', 'commands');
 
     try {
         const commandDirs = fs.readdirSync(commandsDir);
@@ -35,7 +35,7 @@ const loadCommands = async (client: Client): Promise<void> => {
 };
 
 const loadEvents = async (client: Client): Promise<void> => {
-    const eventsDir = path.join(__dirname, '../events');
+    const eventsDir = path.join(__dirname, '..', '..', 'events');
 
     try {
         const eventFiles = fs.readdirSync(eventsDir);
