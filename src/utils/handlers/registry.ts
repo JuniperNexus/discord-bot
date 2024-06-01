@@ -7,17 +7,19 @@ import { Command, Event } from '../../types';
 
 export const commandData: RESTPostAPIApplicationCommandsJSONBody[] = [];
 
-const loadCommands = async (client: Client): Promise<void> => {
-    const commandsDir = path.join(__dirname, '..', '..', 'commands');
+const BASE_DIR = path.join(process.cwd(), env.NODE_ENV === 'development' ? 'src' : 'dist');
+const COMMANDS_DIR = path.join(BASE_DIR, 'commands');
+const EVENTS_DIR = path.join(BASE_DIR, 'events');
 
+const loadCommands = async (client: Client): Promise<void> => {
     try {
-        const commandDirs = fs.readdirSync(commandsDir);
+        const commandDirs = fs.readdirSync(COMMANDS_DIR);
 
         for (const category of commandDirs) {
-            const commandFiles = fs.readdirSync(path.join(commandsDir, category));
+            const commandFiles = fs.readdirSync(path.join(COMMANDS_DIR, category));
 
             for (const file of commandFiles) {
-                const commandPath = path.join(commandsDir, category, file);
+                const commandPath = path.join(COMMANDS_DIR, category, file);
                 const { command } = require(commandPath) as { command: Command };
 
                 client.commands.set(command.name, command);
@@ -35,13 +37,11 @@ const loadCommands = async (client: Client): Promise<void> => {
 };
 
 const loadEvents = async (client: Client): Promise<void> => {
-    const eventsDir = path.join(__dirname, '..', '..', 'events');
-
     try {
-        const eventFiles = fs.readdirSync(eventsDir);
+        const eventFiles = fs.readdirSync(EVENTS_DIR);
 
         for (const file of eventFiles) {
-            const eventPath = path.join(eventsDir, file);
+            const eventPath = path.join(EVENTS_DIR, file);
             const { event } = require(eventPath) as { event: Event<keyof ClientEvents> };
 
             if (event.once) {

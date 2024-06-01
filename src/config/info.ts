@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs';
 import { join } from 'path';
 
-const packagePath = join(__dirname, '../../package.json');
+const packagePath = join(process.cwd(), 'package.json');
 const packageJson = readFileSync(packagePath).toString();
 
 export const info = {

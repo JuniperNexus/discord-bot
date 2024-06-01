@@ -13,7 +13,7 @@ export const command: Command = {
             const description = info.description;
             const version = info.version;
             const developer = client.users.cache.get(env.OWNER_ID)?.username || 'unknown';
-            const memberCount = client.guilds.cache.get(env.GUILD_ID)?.memberCount || 'unknown';
+            const memberCount = client.guilds.cache.get(env.GUILD_ID)?.memberCount || '--';
             const uptime = clientUptime(client.uptime as number);
 
             const embed = embeds.createEmbed(
