@@ -50,13 +50,40 @@ To get started with the Juniper Nexus Discord Bot, follow these steps:
 
 ## Configuration
 
-Create a `.env` file in the root directory of the project and add your Discord bot token and other necessary configurations:
+Create a `.env` file in the root directory of the project or copy the example `.env.example` and add your Discord bot token and other necessary configurations:
 
 ```bash
-NODE_ENV="production"
-TOKEN="YOUR_DISCORD_BOT_TOKEN"
-CLIENT_ID="YOUR_DISCORD_BOT_CLIENT_ID"
-GUILD_ID="YOUR_DISCORD_GUILD_ID"
+cp .env.example .env
+```
+
+Edit the `.env` file with the following values:
+
+```bash
+NODE_ENV="production" # or "development"
+
+# Discord Bot Token
+TOKEN=
+
+# Discord Bot Client ID
+CLIENT_ID=
+
+# Discord Guild ID
+GUILD_ID=
+
+# Discord User ID of the bot owner
+OWNER_ID=
+
+# Discord Role ID for Juniper Nexus members
+JPN_ROLE_ID=
+
+# Discord Role ID for people interested in the Juniper Nexus
+INTERESTED_ROLE_ID=
+
+# Supabase URL
+SUPABASE_URL=
+
+# Supabase Anonymous Key
+SUPABASE_ANON_KEY=
 ```
 
 ## Usage

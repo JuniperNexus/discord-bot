@@ -47,7 +47,7 @@ export const event: Event<'ready'> = {
                         await member.roles.remove(interestedRole.id);
                     }
 
-                    const { error } = await supabase.from('users').insert({
+                    const { error } = await supabase.from('User').insert({
                         user_id: id,
                         username: member.user.username,
                     });

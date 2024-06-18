@@ -11,8 +11,6 @@ const envSchema = z.object({
     JPN_ROLE_ID: z.string(),
     INTERESTED_ROLE_ID: z.string(),
 
-    GEMINI_API_KEY: z.string(),
-
     SUPABASE_URL: z.string(),
     SUPABASE_ANON_KEY: z.string(),
 });

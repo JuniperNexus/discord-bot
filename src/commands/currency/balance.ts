@@ -24,7 +24,7 @@ export const command: Command = {
             const user = interaction.options.getUser('user') || interaction.user;
 
             const { data: transactions } = await supabase
-                .from('coins')
+                .from('Coin')
                 .select('amount, timestamp, operator')
                 .eq('user_id', user.id);
 
@@ -51,8 +51,9 @@ export const command: Command = {
                                 const amount = t.amount || 0;
                                 const type = amount > 0 ? 'added' : 'removed';
 
-                                const operatorUser = interaction.guild?.members.cache.get(t.operator);
-                                const operator = operatorUser?.nickname || operatorUser?.user.username || 'unknown';
+                                const operator = t.operator
+                                    ? interaction.guild?.members.cache.get(t.operator)?.displayName
+                                    : 'unknown';
 
                                 return `> **${i + 1}.** [${type}] \`${amount}\` coins on ${dayjs(t.timestamp).format(
                                     'DD/MM/YYYY',

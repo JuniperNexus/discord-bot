@@ -28,7 +28,7 @@ export const command: Command = {
             }
 
             const { data: userLevel } = await supabase
-                .from('voice_levels')
+                .from('VoiceLevel')
                 .select('xp, level, time_spent')
                 .eq('user_id', user.id)
                 .eq('guild_id', guild.id)

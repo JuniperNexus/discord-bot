@@ -3,12 +3,45 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
 export type Database = {
     public: {
         Tables: {
-            coins: {
+            _prisma_migrations: {
+                Row: {
+                    applied_steps_count: number;
+                    checksum: string;
+                    finished_at: string | null;
+                    id: string;
+                    logs: string | null;
+                    migration_name: string;
+                    rolled_back_at: string | null;
+                    started_at: string;
+                };
+                Insert: {
+                    applied_steps_count?: number;
+                    checksum: string;
+                    finished_at?: string | null;
+                    id: string;
+                    logs?: string | null;
+                    migration_name: string;
+                    rolled_back_at?: string | null;
+                    started_at?: string;
+                };
+                Update: {
+                    applied_steps_count?: number;
+                    checksum?: string;
+                    finished_at?: string | null;
+                    id?: string;
+                    logs?: string | null;
+                    migration_name?: string;
+                    rolled_back_at?: string | null;
+                    started_at?: string;
+                };
+                Relationships: [];
+            };
+            Coin: {
                 Row: {
                     amount: number | null;
                     event_name: string | null;
                     id: number;
-                    operator: string;
+                    operator: string | null;
                     reason: string | null;
                     timestamp: string;
                     user_id: string;
@@ -16,8 +49,8 @@ export type Database = {
                 Insert: {
                     amount?: number | null;
                     event_name?: string | null;
-                    id?: never;
-                    operator: string;
+                    id?: number;
+                    operator?: string | null;
                     reason?: string | null;
                     timestamp?: string;
                     user_id: string;
@@ -25,30 +58,30 @@ export type Database = {
                 Update: {
                     amount?: number | null;
                     event_name?: string | null;
-                    id?: never;
-                    operator?: string;
+                    id?: number;
+                    operator?: string | null;
                     reason?: string | null;
                     timestamp?: string;
                     user_id?: string;
                 };
                 Relationships: [
                     {
-                        foreignKeyName: 'coins_event_name_fkey';
+                        foreignKeyName: 'Coin_event_name_fkey';
                         columns: ['event_name'];
                         isOneToOne: false;
-                        referencedRelation: 'events';
+                        referencedRelation: 'Event';
                         referencedColumns: ['event_name'];
                     },
                     {
-                        foreignKeyName: 'coins_user_id_fkey';
+                        foreignKeyName: 'Coin_user_id_fkey';
                         columns: ['user_id'];
                         isOneToOne: false;
-                        referencedRelation: 'users';
+                        referencedRelation: 'User';
                         referencedColumns: ['user_id'];
                     },
                 ];
             };
-            events: {
+            Event: {
                 Row: {
                     event_name: string;
                     id: number;
@@ -56,62 +89,38 @@ export type Database = {
                 };
                 Insert: {
                     event_name: string;
-                    id?: never;
-                    timestamp: string;
+                    id?: number;
+                    timestamp?: string;
                 };
                 Update: {
                     event_name?: string;
-                    id?: never;
+                    id?: number;
                     timestamp?: string;
                 };
                 Relationships: [];
             };
-            levels: {
-                Row: {
-                    guild_id: string;
-                    id: string;
-                    level: number;
-                    user_id: string;
-                    xp: number;
-                };
-                Insert: {
-                    guild_id: string;
-                    id?: string;
-                    level: number;
-                    user_id: string;
-                    xp: number;
-                };
-                Update: {
-                    guild_id?: string;
-                    id?: string;
-                    level?: number;
-                    user_id?: string;
-                    xp?: number;
-                };
-                Relationships: [];
-            };
-            users: {
+            User: {
                 Row: {
                     id: number;
                     user_id: string;
                     username: string;
                 };
                 Insert: {
-                    id?: never;
+                    id?: number;
                     user_id: string;
                     username: string;
                 };
                 Update: {
-                    id?: never;
+                    id?: number;
                     user_id?: string;
                     username?: string;
                 };
                 Relationships: [];
             };
-            voice_levels: {
+            VoiceLevel: {
                 Row: {
                     guild_id: string;
-                    id: string;
+                    id: number;
                     level: string;
                     time_spent: string;
                     user_id: string;
@@ -119,7 +128,7 @@ export type Database = {
                 };
                 Insert: {
                     guild_id: string;
-                    id?: string;
+                    id?: number;
                     level: string;
                     time_spent: string;
                     user_id: string;
@@ -127,7 +136,7 @@ export type Database = {
                 };
                 Update: {
                     guild_id?: string;
-                    id?: string;
+                    id?: number;
                     level?: string;
                     time_spent?: string;
                     user_id?: string;

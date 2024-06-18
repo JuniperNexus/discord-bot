@@ -23,14 +23,14 @@ export const event: Event<'voiceStateUpdate'> = {
                 mapUserJoin.set(userId, dayjs().toDate());
 
                 const { data: user } = await supabase
-                    .from('voice_levels')
+                    .from('VoiceLevel')
                     .select('xp, level, time_spent')
                     .eq('user_id', userId)
                     .eq('guild_id', guildId)
                     .single();
 
                 if (!user) {
-                    const { error } = await supabase.from('voice_levels').insert({
+                    const { error } = await supabase.from('VoiceLevel').insert({
                         user_id: userId,
                         guild_id: guildId,
                         xp: '0',
@@ -56,7 +56,7 @@ export const event: Event<'voiceStateUpdate'> = {
                 if (timeSpent <= 0) return;
 
                 let { data: user } = await supabase
-                    .from('voice_levels')
+                    .from('VoiceLevel')
                     .select('xp, level, time_spent')
                     .eq('user_id', userId)
                     .eq('guild_id', guildId)
@@ -82,7 +82,7 @@ export const event: Event<'voiceStateUpdate'> = {
                 };
 
                 const { error } = await supabase
-                    .from('voice_levels')
+                    .from('VoiceLevel')
                     .update(updatatedUser)
                     .eq('user_id', userId)
                     .eq('guild_id', guildId);

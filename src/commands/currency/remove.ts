@@ -43,7 +43,7 @@ export const command: Command = {
                 return;
             }
 
-            const { error } = await supabase.from('coins').insert({
+            const { error } = await supabase.from('Coin').insert({
                 user_id: data.user_id,
                 amount: -amount,
                 operator: interaction.user.id,
