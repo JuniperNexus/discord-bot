@@ -2,23 +2,33 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.1.1] - 2024-05-26
+
+### Chore
+
+-   Reverted the build script in `package.json` to use TypeScript compiler (tsc) instead of esbuild.
+    This change reverts the build process back to using TypeScript compiler for better compatibility and stability.
+
 ## [3.1.0] - 2024-06-18
 
 ### Feat
-- Added `createevent` command for creating new events.
-- Added `listevents` command for listing all available events.
+
+-   Added `createevent` command for creating new events.
+-   Added `listevents` command for listing all available events.
 
 ### Enhancements
-- Added `.env.example` for better environment variable management.
-- Updated `README.md` to reflect new environment configuration setup.
-- Updated currency `balance`, `give`, and `remove` commands for better Supabase table referencing.
-- Updated leveling `leaderboard`, `rank`, and `xp` commands for better Supabase table referencing.
-- Updated `ready` and `voiceStateUpdate` events to use correct Supabase table references.
-- Refactored `get-event` and `get-user` Supabase functions for better error handling.
+
+-   Added `.env.example` for better environment variable management.
+-   Updated `README.md` to reflect new environment configuration setup.
+-   Updated currency `balance`, `give`, and `remove` commands for better Supabase table referencing.
+-   Updated leveling `leaderboard`, `rank`, and `xp` commands for better Supabase table referencing.
+-   Updated `ready` and `voiceStateUpdate` events to use correct Supabase table references.
+-   Refactored `get-event` and `get-user` Supabase functions for better error handling.
 
 ### Removed
-- Removed deprecated `ai` command and Google Generative AI service.
-- Modified `config/env.ts` to remove unused `GEMINI_API_KEY`.
+
+-   Removed deprecated `ai` command and Google Generative AI service.
+-   Modified `config/env.ts` to remove unused `GEMINI_API_KEY`.
 
 ## [3.0.0] - 2024-05-28
 

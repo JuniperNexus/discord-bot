@@ -27,7 +27,7 @@ export const command: Command = {
             });
 
             if (error) {
-                logger.error('Error creating event:', error.details);
+                logger.error('Error creating event:', error.message);
                 await interaction.editReply({ embeds: [embeds.error('Failed to create event.')] });
                 return;
             }
