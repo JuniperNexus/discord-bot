@@ -22,8 +22,8 @@ export const command: Command = {
 
             await interaction.reply({ embeds: [embeds.success(`the bot has been online for ${uptime}.`)] });
         } catch (error) {
-            logger.error('Error executing ping command:', error);
-            await interaction.reply({ embeds: [embeds.error('failed to ping the bot.')] });
+            logger.error('Error executing uptime command:', error as Error);
+            await interaction.reply({ embeds: [embeds.error('failed to get uptime.')] });
         }
     },
 };

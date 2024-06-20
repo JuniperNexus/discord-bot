@@ -16,7 +16,7 @@ const main = async () => {
         await registerEvents(client);
         await client.login(env.TOKEN);
     } catch (error) {
-        logger.error('Error starting the bot:', error);
+        logger.error('Failed to start the bot:', error as Error);
     }
 };
 

@@ -32,7 +32,7 @@ const loadCommands = async (client: Client): Promise<void> => {
 
         logger.info(`Successfully registered ${commandData.length} command${commandData.length === 1 ? '' : 's'}`);
     } catch (error) {
-        logger.error('Error registering commands:', error);
+        logger.error('Error registering commands:', error as Error);
     }
 };
 
@@ -53,7 +53,7 @@ const loadEvents = async (client: Client): Promise<void> => {
 
         logger.info(`Successfully registered ${eventFiles.length} event${eventFiles.length === 1 ? '' : 's'}`);
     } catch (error) {
-        logger.error('Error registering events:', error);
+        logger.error('Error registering events:', error as Error);
     }
 };
 

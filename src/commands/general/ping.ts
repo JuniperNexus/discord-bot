@@ -18,7 +18,7 @@ export const command: Command = {
 
             await msg.edit({ embeds: [embeds.success(`api ${api} ms - message ${message} ms`)] });
         } catch (error) {
-            logger.error('Error executing ping command:', error);
+            logger.error('Error executing ping command:', error as Error);
             await interaction.reply({ embeds: [embeds.error('failed to ping the bot.')] });
         }
     },

@@ -52,7 +52,7 @@ export const command: Command = {
 
             await interaction.editReply({ embeds: [embed] });
         } catch (error) {
-            logger.error('Error fetching xp:', error);
+            logger.error('Error executing xp command:', error as Error);
             await interaction.editReply({ embeds: [embeds.error('failed to fetch xp.')] });
         }
     },

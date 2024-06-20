@@ -27,7 +27,7 @@ export const command: Command = {
                 .order('xp');
 
             if (error) {
-                logger.error('Error fetching user rank:', error.details);
+                logger.error('Error fetching user rank:', JSON.stringify(error));
                 await interaction.editReply({ embeds: [embeds.error('failed to fetch user rank.')] });
                 return;
             }
@@ -61,7 +61,7 @@ export const command: Command = {
 
             await interaction.editReply({ embeds: [embed] });
         } catch (error) {
-            logger.error('Error fetching rank:', error);
+            logger.error('Error executing rank command:', error as Error);
             await interaction.editReply({ embeds: [embeds.error('failed to fetch rank.')] });
         }
     },

@@ -120,7 +120,7 @@ export const command: Command = {
 
             await interaction.editReply({ embeds: [embed] });
         } catch (error) {
-            logger.error('Error executing weather command:', error);
+            logger.error('Error executing weather command:', error as Error);
             await interaction.editReply({ embeds: [embeds.error('failed to get weather.')] });
         }
     },

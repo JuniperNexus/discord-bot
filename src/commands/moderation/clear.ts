@@ -53,7 +53,7 @@ export const command: Command = {
 
             await initMessage.edit({ embeds: [embeds.success(message)] });
         } catch (error) {
-            logger.error('Error to clear messages:', error);
+            logger.error('Error executing clear command:', error as Error);
             await initMessage.edit({ embeds: [embeds.error('failed to clear messages.')] });
         }
     },

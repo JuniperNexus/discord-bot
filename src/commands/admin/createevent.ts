@@ -27,14 +27,14 @@ export const command: Command = {
             });
 
             if (error) {
-                logger.error('Error creating event:', error.message);
+                logger.error('Failed to create event:', JSON.stringify(error));
                 await interaction.editReply({ embeds: [embeds.error('Failed to create event.')] });
                 return;
             }
 
             await interaction.editReply({ embeds: [embeds.success(`Event \`${eventName}\` created successfully.`)] });
         } catch (error) {
-            logger.error('Error creating event:', error);
+            logger.error('Error executing createevent command:', error as Error);
             await interaction.editReply({ embeds: [embeds.error('Failed to create event.')] });
         }
     },

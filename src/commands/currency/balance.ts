@@ -103,7 +103,7 @@ export const command: Command = {
                 await message.edit({ components: [] });
             });
         } catch (error) {
-            logger.error('Error to get balance:', error);
+            logger.error('Error executing balance command:', error as Error);
             await interaction.editReply({ embeds: [embeds.error('failed to get balance.')] });
         }
     },

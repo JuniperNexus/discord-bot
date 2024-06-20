@@ -13,7 +13,7 @@ export const command: Command = {
         try {
             const { data: events, error } = await getEvents();
             if (error || !events) {
-                logger.error('Error fetching events:', error?.message);
+                logger.error('Error fetching events:', JSON.stringify(error));
                 await interaction.editReply({ embeds: [embeds.error('Failed to fetch events.')] });
                 return;
             }
@@ -28,8 +28,8 @@ export const command: Command = {
 
             await interaction.editReply({ embeds: [embed] });
         } catch (error) {
-            logger.error('Error listing events:', error);
-            await interaction.editReply({ embeds: [embeds.error('An error occurred while listing events.')] });
+            logger.error('Error executing listevents command:', error as Error);
+            await interaction.editReply({ embeds: [embeds.error('failed to list events.')] });
         }
     },
 };

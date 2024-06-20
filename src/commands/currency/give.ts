@@ -67,14 +67,14 @@ export const command: Command = {
             });
 
             if (error) {
-                logger.error('Error to give coins:', error.details);
+                logger.error('Error to give coins:', JSON.stringify(error));
                 await interaction.editReply({ embeds: [embeds.error('failed to give coins.')] });
                 return;
             }
 
             await interaction.editReply({ embeds: [embeds.success(`gave \`${amount}\` coins to ${user.username}.`)] });
         } catch (error) {
-            logger.error('Error to give coins:', error);
+            logger.error('Error executing give command:', error as Error);
             await interaction.editReply({ embeds: [embeds.error('failed to give coins.')] });
         }
     },

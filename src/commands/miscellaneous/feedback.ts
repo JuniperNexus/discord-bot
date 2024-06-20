@@ -39,7 +39,7 @@ export const command: Command = {
 
             await interaction.editReply({ embeds: [embeds.success('feedback sent successfully!')] });
         } catch (error) {
-            logger.error('Error sending feedback:', error);
+            logger.error('Error executing feedback command:', error as Error);
             await interaction.editReply({ embeds: [embeds.error('failed to send feedback.')] });
         }
     },

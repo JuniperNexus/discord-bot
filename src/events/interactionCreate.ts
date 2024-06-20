@@ -51,7 +51,7 @@ export const event: Event<'interactionCreate'> = {
 
             await command.execute(client, interaction);
         } catch (error) {
-            logger.error('Error executing command:', error);
+            logger.error('Error executing command:', error as Error);
         }
     },
 };

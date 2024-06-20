@@ -53,7 +53,7 @@ export const event: Event<'ready'> = {
                     });
 
                     if (error) {
-                        logger.error('Error updating user:', error.details);
+                        logger.error('Error updating user:', JSON.stringify(error));
                     }
                 }
             };
@@ -66,7 +66,7 @@ export const event: Event<'ready'> = {
             setActivity();
             updateGuildMember();
         } catch (error) {
-            logger.error('Error executing ready event:', error);
+            logger.error('Error executing ready event:', error as Error);
         }
     },
 };

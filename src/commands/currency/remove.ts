@@ -51,14 +51,14 @@ export const command: Command = {
             });
 
             if (error) {
-                logger.error('Error to remove coins:', error.details);
+                logger.error('Error to remove coins:', JSON.stringify(error));
                 await interaction.editReply({ embeds: [embeds.error('failed to remove coins.')] });
                 return;
             }
 
             await interaction.editReply({ embeds: [embeds.success(`removed \`${amount}\` coins from ${user.tag}.`)] });
         } catch (error) {
-            logger.error('Error to remove coins:', error);
+            logger.error('Error executing remove command:', error as Error);
             await interaction.editReply({ embeds: [embeds.error('failed to remove coins.')] });
         }
     },

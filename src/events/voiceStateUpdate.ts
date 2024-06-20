@@ -39,7 +39,7 @@ export const event: Event<'voiceStateUpdate'> = {
                     });
 
                     if (error) {
-                        logger.error('Error inserting user:', error.details);
+                        logger.error('Error inserting user:', JSON.stringify(error));
                         return;
                     }
                 }
@@ -88,7 +88,7 @@ export const event: Event<'voiceStateUpdate'> = {
                     .eq('guild_id', guildId);
 
                 if (error) {
-                    logger.error('Error updating voice levels:', error.details);
+                    logger.error('Error updating voice levels:', JSON.stringify(error));
                     return;
                 }
 
@@ -103,13 +103,13 @@ export const event: Event<'voiceStateUpdate'> = {
 
                     try {
                         await newState.member.send({ embeds: [embed] });
-                    } catch (msgError) {
-                        logger.error('Error sending level up message:', msgError);
+                    } catch (error) {
+                        logger.error('Error sending level up message:', error as Error);
                     }
                 }
             }
         } catch (error) {
-            logger.error('Error executing voiceStateUpdate event:', error);
+            logger.error('Error executing voiceStateUpdate event:', error as Error);
         }
     },
 };

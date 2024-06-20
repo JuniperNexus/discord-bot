@@ -38,7 +38,7 @@ export const command: Command = {
 
             await interaction.reply({ embeds: [embed] });
         } catch (error) {
-            logger.error('Error executing avatar command:', error);
+            logger.error('Error executing avatar command:', error as Error);
             await interaction.reply({ embeds: [embeds.error('failed to show avatar.')] });
         }
     },

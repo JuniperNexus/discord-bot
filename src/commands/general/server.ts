@@ -59,7 +59,7 @@ export const command: Command = {
 
             await interaction.reply({ embeds: [embed] });
         } catch (error) {
-            logger.error('Error executing server command:', error);
+            logger.error('Error executing server command:', error as Error);
             await interaction.reply({ embeds: [embeds.error('failed to show server info.')] });
         }
     },

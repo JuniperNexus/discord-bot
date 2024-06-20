@@ -68,7 +68,7 @@ export const command: Command = {
                 }
             });
         } catch (error) {
-            logger.error('Error executing rps command:', error);
+            logger.error('Error executing rps command:', error as Error);
             await interaction.reply({ embeds: [embeds.error('failed to play Rock, Paper, Scissors.')] });
         }
     },

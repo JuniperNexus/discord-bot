@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.2.0] - 2024-05-27
+
+### Refactor
+
+- Improved error logging with detailed error information across various commands and event handlers.
+- Updated `createevent` command to log detailed error information.
+- Enhanced `balance`, `give`, `remove`, and other currency commands with specific error logging.
+- Improved error handling in fun commands like `coinflip`, `dice`, `rps`, and `say`.
+- Refined general commands (`avatar`, `help`, `ping`, `server`, `user`) for better error logging.
+- Enhanced logging in leveling commands (`leaderboard`, `rank`, `xp`).
+- Updated miscellaneous commands (`feedback`, `info`, `uptime`) to log specific errors.
+- Improved moderation commands (`clear`, `kick`) with detailed error information.
+- Refined utility commands (`listevents`, `weather`) for better error traceability.
+- Enhanced event handlers (`interactionCreate`, `ready`, `voiceStateUpdate`) with specific error logging.
+
 ## [3.1.1] - 2024-05-26
 
 ### Chore

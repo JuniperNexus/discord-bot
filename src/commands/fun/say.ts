@@ -20,7 +20,7 @@ export const command: Command = {
 
             await interaction.reply(message);
         } catch (error) {
-            logger.error('Error executing say command:', error);
+            logger.error('Error executing say command:', error as Error);
             await interaction.reply({ embeds: [embeds.error('failed to say something.')] });
         }
     },

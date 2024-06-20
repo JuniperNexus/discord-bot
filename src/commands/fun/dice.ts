@@ -12,7 +12,7 @@ export const command: Command = {
 
             await interaction.reply({ embeds: [embeds.custom(`You rolled a ${roll}.`, config.colors.green, '🎲')] });
         } catch (error) {
-            logger.error('Error executing dice command:', error);
+            logger.error('Error executing dice command:', error as Error);
             await interaction.reply({ embeds: [embeds.error('failed to roll the dice.')] });
         }
     },

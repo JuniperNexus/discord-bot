@@ -32,10 +32,11 @@ const preset =
 export const logger = {
     info: preset({ symbol: clc.green('+'), label: clc.green('INFO') }),
     warn: preset({ symbol: clc.yellow('!'), label: clc.yellow('WARN') }),
-    error: (message: string, error: Error | string | unknown) => {
+    error: (message: string, error: Error | string) => {
         const errorMessage = error instanceof Error ? `${error.name}: ${error.message}\n${error.stack}` : `${error}`;
+
         console.log(
-            `[${clc.red('-')}] ${clc.cyan(dayjs().format('YYYY-MM-DD HH:mm:ss'))} [${clc.red('ERROR')}] ${message}${errorMessage ? `\n${errorMessage}` : ''}`,
+            `[${clc.red('-')}] ${clc.cyan(dayjs().format('YYYY-MM-DD HH:mm:ss'))} [${clc.red('ERROR')}] ${message} ${errorMessage}`,
         );
     },
     debug: (message: string, stack: string) =>

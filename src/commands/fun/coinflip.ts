@@ -16,7 +16,7 @@ export const command: Command = {
                 embeds: [embeds.custom(`You flipped a ${result}.`, config.colors.yellow, '🪙')],
             });
         } catch (error) {
-            logger.error('Error executing coinflip command:', error);
+            logger.error('Error executing coinflip command:', error as Error);
             await interaction.reply({ embeds: [embeds.error('failed to flip the coin.')] });
         }
     },

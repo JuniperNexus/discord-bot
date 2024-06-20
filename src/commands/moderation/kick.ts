@@ -47,7 +47,7 @@ export const command: Command = {
                 ],
             });
         } catch (error) {
-            logger.error('Error executing kick command:', error);
+            logger.error('Error executing kick command:', error as Error);
             await interaction.reply({ embeds: [embeds.error('failed to kick the user.')] });
         }
     },
