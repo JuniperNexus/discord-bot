@@ -1,5 +1,5 @@
 import { ColorResolvable, EmbedBuilder } from 'discord.js';
-import { config } from '../../config';
+import { colors } from '../../config';
 
 /**
  * Creates an embed with a custom message, color, and emoji.
@@ -14,11 +14,11 @@ const presets = (message: string, color: ColorResolvable, emoji: string) => {
 };
 
 export const embeds = {
-    loading: (message: string) => presets(message, config.colors.yellow, '🟡'),
-    success: (message: string) => presets(message, config.colors.green, '✅'),
-    error: (message: string) => presets(message, config.colors.red, '🔥'),
-    info: (message: string) => presets(message, config.colors.blue, '🤖'),
-    warn: (message: string) => presets(message, config.colors.yellow, '⚠️'),
+    loading: (message: string) => presets(message, colors.yellow, '🟡'),
+    success: (message: string) => presets(message, colors.green, '✅'),
+    error: (message: string) => presets(message, colors.red, '🔥'),
+    info: (message: string) => presets(message, colors.blue, '🤖'),
+    warn: (message: string) => presets(message, colors.yellow, '⚠️'),
     custom: (message: string, color: ColorResolvable, emoji: string) => presets(message, color, emoji),
     createEmbed: (title: string, description: string, color?: ColorResolvable) => {
         return new EmbedBuilder()

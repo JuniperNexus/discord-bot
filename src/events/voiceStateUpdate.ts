@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { config } from '../config';
+import { colors } from '../config';
 import { supabase } from '../services/supabase';
 import { Event } from '../types';
 import { embeds, logger } from '../utils';
@@ -97,7 +97,7 @@ export const event: Event<'voiceStateUpdate'> = {
                         .createEmbed(
                             'Level Up!',
                             `${newState.member}, you have leveled up to level ${level} in ${newState.guild.name}.`,
-                            config.colors.green,
+                            colors.green,
                         )
                         .setTimestamp();
 

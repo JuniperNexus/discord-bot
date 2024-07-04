@@ -1,4 +1,4 @@
-import { config } from '../../config';
+import { colors } from '../../config';
 import { getEvents } from '../../libs/supabase/get-event';
 import { Command } from '../../types';
 import { embeds, logger } from '../../utils';
@@ -24,7 +24,7 @@ export const command: Command = {
             }
 
             const eventList = events.map(e => `> • ${e.event_name}`).join('\n');
-            const embed = embeds.createEmbed('Available Events', eventList, config.colors.blue);
+            const embed = embeds.createEmbed('Available Events', eventList, colors.blue);
 
             await interaction.editReply({ embeds: [embed] });
         } catch (error) {

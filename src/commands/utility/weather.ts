@@ -1,5 +1,5 @@
 import { ApplicationCommandOptionType, EmbedBuilder } from 'discord.js';
-import { config } from '../../config';
+import { colors } from '../../config';
 import { Command } from '../../types';
 import { embeds, logger } from '../../utils';
 
@@ -74,7 +74,7 @@ export const command: Command = {
                     name: json.location.name,
                     iconURL: json.current.imageUrl,
                 })
-                .setColor(config.colors.green)
+                .setColor(colors.green)
                 .setDescription(`${json.current.day} (${json.current.skytext} - ${json.current.temperature}°C)\n
                 > • ${json.current.feelslike}°C
                 > • ${json.current.humidity}%
@@ -90,7 +90,7 @@ export const command: Command = {
                             name: json.location.name,
                             iconURL: json.current.imageUrl,
                         })
-                        .setColor(config.colors.green).setDescription(`${forecast.day} (${forecast.skytextday})\n
+                        .setColor(colors.green).setDescription(`${forecast.day} (${forecast.skytextday})\n
                     > • ${forecast.low}°C - ${forecast.high}°C
                     > • ${forecast.precip}
                     `),
@@ -103,7 +103,7 @@ export const command: Command = {
                     name: json.location.name,
                     iconURL: json.current.imageUrl,
                 })
-                .setColor(config.colors.green)
+                .setColor(colors.green)
                 .setDescription(
                     `${json.current.day} - ${json.current.skytext} (${json.current.temperature}°C)\n
                 > • feels like ${json.current.feelslike}°C

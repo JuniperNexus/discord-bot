@@ -1,5 +1,5 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
-import { config } from '../../config';
+import { colors } from '../../config';
 import { Command } from '../../types';
 import { embeds, logger } from '../../utils';
 
@@ -20,7 +20,7 @@ export const command: Command = {
             );
 
             const message = await interaction.reply({
-                embeds: [embeds.custom('choose your move:', config.colors.yellow, '🪨📄✂️')],
+                embeds: [embeds.custom('choose your move:', colors.yellow, '🪨📄✂️')],
                 components: [row],
             });
 
@@ -49,7 +49,7 @@ export const command: Command = {
                     embeds: [
                         embeds.custom(
                             `you chose ${userChoice} and the bot chose ${botChoice}. ${resultMessage}`,
-                            config.colors.green,
+                            colors.green,
                             '🪨📄✂️',
                         ),
                     ],

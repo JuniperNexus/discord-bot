@@ -1,5 +1,5 @@
 import { ApplicationCommandOptionType, EmbedBuilder } from 'discord.js';
-import { config } from '../../config';
+import { colors } from '../../config';
 import { Command } from '../../types';
 import { embeds, logger } from '../../utils';
 
@@ -22,7 +22,7 @@ export const command: Command = {
             const member = guild?.members.cache.get(user.id);
 
             const embed = new EmbedBuilder()
-                .setColor(member?.displayHexColor || config.colors.green)
+                .setColor(member?.displayHexColor || colors.green)
                 .setAuthor({ name: user.username, iconURL: user.displayAvatarURL({ forceStatic: false }) })
                 .setDescription(`${user}`)
                 .addFields(

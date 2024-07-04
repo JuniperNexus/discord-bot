@@ -1,5 +1,5 @@
 import { ApplicationCommandOptionType } from 'discord.js';
-import { config } from '../../config';
+import { colors } from '../../config';
 import { getEvents } from '../../libs/supabase/get-event';
 import { getUser } from '../../libs/supabase/get-user';
 import { supabase } from '../../services/supabase';
@@ -52,7 +52,7 @@ export const command: Command = {
                 const embed = embeds.createEmbed(
                     'not found.',
                     `event \`${event}\` not found.\n\nevents available:\n${events?.map(e => `> • ${e.event_name}`).join('\n')}`,
-                    config.colors.red,
+                    colors.red,
                 );
 
                 await interaction.editReply({ embeds: [embed] });

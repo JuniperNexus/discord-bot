@@ -1,5 +1,5 @@
 import { ApplicationCommandOptionType } from 'discord.js';
-import { config } from '../../config';
+import { colors } from '../../config';
 import { Command } from '../../types';
 import { embeds, logger } from '../../utils';
 
@@ -42,7 +42,7 @@ export const command: Command = {
                     embeds.createEmbed(
                         'kicked user',
                         `kicked ${user.tag} from the server.\n\nreason:\n\`\`\`${reason}\`\`\``,
-                        config.colors.green,
+                        colors.green,
                     ),
                 ],
             });

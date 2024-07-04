@@ -1,4 +1,4 @@
-import { config } from '../../config';
+import { colors } from '../../config';
 import { supabase } from '../../services/supabase';
 import { Command } from '../../types';
 import { embeds, logger } from '../../utils';
@@ -39,7 +39,7 @@ export const command: Command = {
 
             if (leaderBoard.length === 0) {
                 await interaction.editReply({
-                    embeds: [embeds.custom('leaderboard is empty', config.colors.red, '🏆')],
+                    embeds: [embeds.custom('leaderboard is empty', colors.red, '🏆')],
                 });
                 return;
             }

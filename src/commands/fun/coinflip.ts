@@ -1,4 +1,4 @@
-import { config } from '../../config';
+import { colors } from '../../config';
 import { Command } from '../../types';
 import { embeds, logger } from '../../utils';
 
@@ -13,7 +13,7 @@ export const command: Command = {
             const result = outcome < 0.5 ? 'heads' : 'tails';
 
             await interaction.reply({
-                embeds: [embeds.custom(`You flipped a ${result}.`, config.colors.yellow, '🪙')],
+                embeds: [embeds.custom(`You flipped a ${result}.`, colors.yellow, '🪙')],
             });
         } catch (error) {
             logger.error('Error executing coinflip command:', error as Error);

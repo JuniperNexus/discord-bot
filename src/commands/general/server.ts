@@ -1,5 +1,5 @@
 import { EmbedBuilder } from 'discord.js';
-import { config } from '../../config';
+import { colors } from '../../config';
 import { Command } from '../../types';
 import { embeds, logger } from '../../utils';
 
@@ -12,7 +12,7 @@ export const command: Command = {
             const guild = interaction.guild!;
 
             const embed = new EmbedBuilder()
-                .setColor(config.colors.green)
+                .setColor(colors.green)
                 .setAuthor({ name: guild.name, iconURL: guild.iconURL() || undefined })
                 .addFields(
                     {
