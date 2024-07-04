@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.3.0] - 2024-05-27
+
+### Chore
+
+-   Refactored multiple command files and event handlers to utilize color constants defined in `colors.ts`.
+-   Added `colors.ts` to manage color constants centrally.
+
 ## [3.2.0] - 2024-05-27
 
 ### Refactor
