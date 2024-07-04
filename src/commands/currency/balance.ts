@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { ActionRowBuilder, ApplicationCommandOptionType, ButtonBuilder, ButtonStyle, ComponentType } from 'discord.js';
-import { supabase } from '../../services/supabase';
+import { getUserTransactions } from '../../db';
 import { Command } from '../../types';
 import { embeds, logger, timer } from '../../utils';
 
@@ -23,10 +23,7 @@ export const command: Command = {
         try {
             const user = interaction.options.getUser('user') || interaction.user;
 
-            const { data: transactions } = await supabase
-                .from('Coin')
-                .select('amount, timestamp, operator')
-                .eq('user_id', user.id);
+            const transactions = await getUserTransactions(user.id);
 
             if (!transactions) {
                 await interaction.editReply({ embeds: [embeds.error('no transactions found.')] });
@@ -44,7 +41,7 @@ export const command: Command = {
 
                 const embed = embeds
                     .createEmbed(
-                        `${user.username}'s balance and transactions`,
+                        `${user.displayName}'s balance and transactions`,
                         `balance: ${balance}\n\ntransactions:\n${transactions
                             .slice(start, end)
                             .map((t, i) => {

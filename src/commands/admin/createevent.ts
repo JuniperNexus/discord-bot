@@ -1,5 +1,5 @@
 import { ApplicationCommandOptionType } from 'discord.js';
-import { supabase } from '../../services/supabase';
+import { createEvent } from '../../db';
 import { Command } from '../../types';
 import { embeds, logger } from '../../utils';
 
@@ -22,15 +22,7 @@ export const command: Command = {
         try {
             const eventName = interaction.options.getString('name', true);
 
-            const { error } = await supabase.from('Event').insert({
-                event_name: eventName,
-            });
-
-            if (error) {
-                logger.error('Failed to create event:', JSON.stringify(error));
-                await interaction.editReply({ embeds: [embeds.error('Failed to create event.')] });
-                return;
-            }
+            await createEvent(eventName);
 
             await interaction.editReply({ embeds: [embeds.success(`Event \`${eventName}\` created successfully.`)] });
         } catch (error) {

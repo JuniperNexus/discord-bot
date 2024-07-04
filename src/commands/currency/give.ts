@@ -1,8 +1,6 @@
 import { ApplicationCommandOptionType } from 'discord.js';
 import { colors } from '../../config';
-import { getEvents } from '../../libs/supabase/get-event';
-import { getUser } from '../../libs/supabase/get-user';
-import { supabase } from '../../services/supabase';
+import { getEvents, getUserById, insertCoin } from '../../db';
 import { Command } from '../../types';
 import { embeds, logger } from '../../utils';
 
@@ -39,13 +37,17 @@ export const command: Command = {
             const amount = interaction.options.getNumber('amount', true);
             const event = interaction.options.getString('event', true);
 
-            const { data } = await getUser(user.id);
-            if (!data) {
+            const userData = await getUserById(user.id);
+            if (!userData) {
                 await interaction.editReply({ embeds: [embeds.error('user not found in database.')] });
                 return;
             }
 
-            const { data: events } = await getEvents();
+            const events = await getEvents();
+            if (events.length === 0) {
+                await interaction.editReply({ embeds: [embeds.info('No events found.')] });
+                return;
+            }
             const isEvent = events?.find(e => e.event_name === event);
 
             if (!isEvent) {
@@ -59,20 +61,16 @@ export const command: Command = {
                 return;
             }
 
-            const { error } = await supabase.from('Coin').insert({
-                user_id: data.user_id,
-                amount: amount,
+            await insertCoin({
+                user_id: userData.user_id,
+                amount,
                 event_name: event,
                 operator: interaction.user.id,
             });
 
-            if (error) {
-                logger.error('Error to give coins:', JSON.stringify(error));
-                await interaction.editReply({ embeds: [embeds.error('failed to give coins.')] });
-                return;
-            }
-
-            await interaction.editReply({ embeds: [embeds.success(`gave \`${amount}\` coins to ${user.username}.`)] });
+            await interaction.editReply({
+                embeds: [embeds.success(`gave \`${amount}\` coins to ${user.displayName}.`)],
+            });
         } catch (error) {
             logger.error('Error executing give command:', error as Error);
             await interaction.editReply({ embeds: [embeds.error('failed to give coins.')] });

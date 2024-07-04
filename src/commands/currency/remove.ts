@@ -1,6 +1,5 @@
 import { ApplicationCommandOptionType } from 'discord.js';
-import { getUser } from '../../libs/supabase/get-user';
-import { supabase } from '../../services/supabase';
+import { getUserById, insertCoin } from '../../db';
 import { Command } from '../../types';
 import { embeds, logger } from '../../utils';
 
@@ -37,26 +36,22 @@ export const command: Command = {
             const amount = interaction.options.getNumber('amount', true);
             const reason = interaction.options.getString('reason', true);
 
-            const { data } = await getUser(user.id);
-            if (!data) {
+            const userData = await getUserById(user.id);
+            if (!userData) {
                 await interaction.editReply({ embeds: [embeds.error('user not found in database.')] });
                 return;
             }
 
-            const { error } = await supabase.from('Coin').insert({
-                user_id: data.user_id,
+            await insertCoin({
+                user_id: userData.user_id,
                 amount: -amount,
                 operator: interaction.user.id,
                 reason: reason,
             });
 
-            if (error) {
-                logger.error('Error to remove coins:', JSON.stringify(error));
-                await interaction.editReply({ embeds: [embeds.error('failed to remove coins.')] });
-                return;
-            }
-
-            await interaction.editReply({ embeds: [embeds.success(`removed \`${amount}\` coins from ${user.tag}.`)] });
+            await interaction.editReply({
+                embeds: [embeds.success(`removed \`${amount}\` coins from ${user.displayName}.`)],
+            });
         } catch (error) {
             logger.error('Error executing remove command:', error as Error);
             await interaction.editReply({ embeds: [embeds.error('failed to remove coins.')] });

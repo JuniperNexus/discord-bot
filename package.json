@@ -1,31 +1,31 @@
 {
     "name": "discord-bot",
-    "version": "3.3.0",
+    "version": "4.0.0",
     "description": "A feature-rich Discord bot for the Juniper Nexus guild.",
     "license": "MIT",
     "main": "src/index.ts",
     "scripts": {
         "prebuild": "rimraf dist",
         "build": "tsc -p tsconfig.json",
-        "database-types": "supabase gen types typescript --project-id \"qpmtvzspevuvztptbwwr\" --schema public > ./src/types/Supabase/DatabaseGenerated.ts",
-        "postdatabase-types": "pnpm format:fix",
         "dev": "tsx --watch src/index.ts",
         "format:fix": "prettier --write . --list-different",
+        "generate": "drizzle-kit generate",
+        "introspect": "drizzle-kit introspect",
         "knip": "knip",
         "knip:fix": "knip --fix",
         "lint": "eslint . --ext .ts",
+        "migrate": "drizzle-kit migrate",
         "prepare": "husky",
-        "start": "cross-env NODE_ENV=production node dist/index.js",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "start": "cross-env NODE_ENV=production node dist/index.js"
     },
     "dependencies": {
-        "@supabase/supabase-js": "^2.43.4",
         "cli-color": "^2.0.4",
         "cross-env": "^7.0.3",
         "dayjs": "^1.11.11",
         "discord.js": "^14.15.2",
         "dotenv": "^16.4.5",
-        "supabase": "^1.172.2",
+        "drizzle-orm": "^0.31.2",
+        "postgres": "^3.4.4",
         "zod": "^3.23.8"
     },
     "devDependencies": {
@@ -36,6 +36,7 @@
         "@types/node": "^20.13.0",
         "@typescript-eslint/eslint-plugin": "^7.11.0",
         "@typescript-eslint/parser": "^7.11.0",
+        "drizzle-kit": "^0.22.8",
         "eslint": "^8.57.0",
         "eslint-config-prettier": "^9.1.0",
         "eslint-plugin-prettier": "^5.1.3",

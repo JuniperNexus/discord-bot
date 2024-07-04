@@ -1,4 +1,4 @@
-import { supabase } from '../../services/supabase';
+import { getLeaderBoard } from '../../db';
 import { Command } from '../../types';
 import { convertTime, embeds, logger } from '../../utils';
 
@@ -20,24 +20,9 @@ export const command: Command = {
                 return;
             }
 
-            const { data, error } = await supabase
-                .from('VoiceLevel')
-                .select('user_id, xp, level, time_spent')
-                .eq('guild_id', guild.id)
-                .order('xp');
+            const leaderBoard = await getLeaderBoard(guild.id, LIMIT);
 
-            if (error) {
-                logger.error('Error fetching user rank:', JSON.stringify(error));
-                await interaction.editReply({ embeds: [embeds.error('failed to fetch user rank.')] });
-                return;
-            }
-
-            const userRank = data
-                .map(e => ({ ...e, xp: parseInt(e.xp) }))
-                .sort((a, b) => b.xp - a.xp)
-                .slice(0, LIMIT);
-
-            const userIndex = userRank.findIndex(entry => entry.user_id === user.id);
+            const userIndex = leaderBoard.findIndex(entry => entry.user_id === user.id);
 
             if (userIndex === -1) {
                 await interaction.editReply({
@@ -47,7 +32,7 @@ export const command: Command = {
             }
 
             const rank = userIndex + 1;
-            const userEntry = userRank[userIndex];
+            const userEntry = leaderBoard[userIndex];
             const xp = userEntry.xp;
             const level = userEntry.level;
             const time_spent = convertTime(parseInt(userEntry.time_spent), 'minutes');

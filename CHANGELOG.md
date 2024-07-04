@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [4.0.0] - 2024-05-28
+
+### Feat
+
+-   Migrated to Drizzle ORM for database operations.
+-   Replaced Supabase.js with Drizzle for ORM-based database interactions.
+-   Added `drizzle.config.ts` for Drizzle configuration.
+-   Introduced `src/db` directory with Drizzle migration files and schema definitions.
+
+### Breaking Changes
+
+-   Updated multiple command files, event handlers, and configuration files to accommodate Drizzle ORM.
+
 ## [3.3.0] - 2024-05-27
 
 ### Chore

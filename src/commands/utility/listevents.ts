@@ -1,5 +1,5 @@
 import { colors } from '../../config';
-import { getEvents } from '../../libs/supabase/get-event';
+import { getEvents } from '../../db';
 import { Command } from '../../types';
 import { embeds, logger } from '../../utils';
 
@@ -11,13 +11,7 @@ export const command: Command = {
         await interaction.reply({ embeds: [embeds.loading('Fetching events...')], fetchReply: true });
 
         try {
-            const { data: events, error } = await getEvents();
-            if (error || !events) {
-                logger.error('Error fetching events:', JSON.stringify(error));
-                await interaction.editReply({ embeds: [embeds.error('Failed to fetch events.')] });
-                return;
-            }
-
+            const events = await getEvents();
             if (events.length === 0) {
                 await interaction.editReply({ embeds: [embeds.info('No events found.')] });
                 return;

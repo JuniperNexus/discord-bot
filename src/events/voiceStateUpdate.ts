@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
+import { and, eq } from 'drizzle-orm';
 import { colors } from '../config';
-import { supabase } from '../services/supabase';
+import { db, getUserLevel, insertVoiceLevel, VoiceLevel } from '../db';
 import { Event } from '../types';
 import { embeds, logger } from '../utils';
 
@@ -22,26 +23,16 @@ export const event: Event<'voiceStateUpdate'> = {
             if (!oldState.channelId && newState.channelId) {
                 mapUserJoin.set(userId, dayjs().toDate());
 
-                const { data: user } = await supabase
-                    .from('VoiceLevel')
-                    .select('xp, level, time_spent')
-                    .eq('user_id', userId)
-                    .eq('guild_id', guildId)
-                    .single();
+                const user = await getUserLevel(guildId, userId);
 
                 if (!user) {
-                    const { error } = await supabase.from('VoiceLevel').insert({
+                    await insertVoiceLevel({
                         user_id: userId,
                         guild_id: guildId,
                         xp: '0',
                         level: '0',
                         time_spent: '0',
                     });
-
-                    if (error) {
-                        logger.error('Error inserting user:', JSON.stringify(error));
-                        return;
-                    }
                 }
             }
 
@@ -55,12 +46,7 @@ export const event: Event<'voiceStateUpdate'> = {
 
                 if (timeSpent <= 0) return;
 
-                let { data: user } = await supabase
-                    .from('VoiceLevel')
-                    .select('xp, level, time_spent')
-                    .eq('user_id', userId)
-                    .eq('guild_id', guildId)
-                    .single();
+                let user = await getUserLevel(guildId, userId);
 
                 user = user ?? { xp: '0', level: '0', time_spent: '0' };
 
@@ -81,16 +67,10 @@ export const event: Event<'voiceStateUpdate'> = {
                     time_spent: timeSpentInt.toString(),
                 };
 
-                const { error } = await supabase
-                    .from('VoiceLevel')
-                    .update(updatatedUser)
-                    .eq('user_id', userId)
-                    .eq('guild_id', guildId);
-
-                if (error) {
-                    logger.error('Error updating voice levels:', JSON.stringify(error));
-                    return;
-                }
+                await db
+                    .update(VoiceLevel)
+                    .set(updatatedUser)
+                    .where(and(eq(VoiceLevel.user_id, userId), eq(VoiceLevel.guild_id, guildId)));
 
                 if (level > parseInt(user.level)) {
                     const embed = embeds

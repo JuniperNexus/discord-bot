@@ -1,5 +1,5 @@
 import { ApplicationCommandOptionType } from 'discord.js';
-import { supabase } from '../../services/supabase';
+import { getUserLevel } from '../../db';
 import { Command } from '../../types';
 import { convertTime, embeds, logger } from '../../utils';
 
@@ -27,12 +27,7 @@ export const command: Command = {
                 return;
             }
 
-            const { data: userLevel } = await supabase
-                .from('VoiceLevel')
-                .select('xp, level, time_spent')
-                .eq('user_id', user.id)
-                .eq('guild_id', guild.id)
-                .single();
+            const userLevel = await getUserLevel(guild.id, user.id);
 
             if (!userLevel) {
                 await interaction.editReply({ embeds: [embeds.error('user not found in database.')] });

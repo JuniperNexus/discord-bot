@@ -1,9 +1,8 @@
 import { ActivityType } from 'discord.js';
 import { env } from '../config';
-import { getUser } from '../libs/supabase/get-user';
-import { supabase } from '../services/supabase';
+import { getUserById, insertUser } from '../db';
 import { Event } from '../types';
-import { logger, timer } from '../utils';
+import { logger } from '../utils';
 
 export const event: Event<'ready'> = {
     name: 'ready',
@@ -40,26 +39,22 @@ export const event: Event<'ready'> = {
                 for (const [id, member] of members) {
                     if (!member.roles.cache.has(jpnRole.id)) return;
 
-                    const user = await getUser(id);
+                    const user = await getUserById(id);
                     if (user) continue;
 
                     if (member.roles.cache.has(interestedRole.id)) {
                         await member.roles.remove(interestedRole.id);
                     }
 
-                    const { error } = await supabase.from('User').insert({
+                    await insertUser({
                         user_id: id,
                         username: member.user.username,
                     });
-
-                    if (error) {
-                        logger.error('Error updating user:', JSON.stringify(error));
-                    }
                 }
             };
 
-            setInterval(setActivity, timer.second(15));
-            setInterval(updateGuildMember, timer.minute(10));
+            setInterval(setActivity, 15 * 1000);
+            setInterval(updateGuildMember, 10 * 60 * 1000);
 
             logger.info(`Logged in as ${client.user!.tag}`);
 

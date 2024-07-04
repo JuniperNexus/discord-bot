@@ -63,41 +63,10 @@ export const command: Command = {
 
         try {
             const location = interaction.options.getString('location', true);
-            // https://api.popcat.xyz/weather?q=Samut%20Sakhon
             const response = await fetch(`https://api.popcat.xyz/weather?q=${location}`);
             const data = await response.json();
-
             const json = data[0] as Weather;
 
-            /* const embed = new EmbedBuilder()
-                .setAuthor({
-                    name: json.location.name,
-                    iconURL: json.current.imageUrl,
-                })
-                .setColor(colors.green)
-                .setDescription(`${json.current.day} (${json.current.skytext} - ${json.current.temperature}°C)\n
-                > • ${json.current.feelslike}°C
-                > • ${json.current.humidity}%
-                > • ${json.current.winddisplay}
-                `);
-
-            const forecastEmbeds = [];
-
-            for (const forecast of json.forecast) {
-                forecastEmbeds.push(
-                    new EmbedBuilder()
-                        .setAuthor({
-                            name: json.location.name,
-                            iconURL: json.current.imageUrl,
-                        })
-                        .setColor(colors.green).setDescription(`${forecast.day} (${forecast.skytextday})\n
-                    > • ${forecast.low}°C - ${forecast.high}°C
-                    > • ${forecast.precip}
-                    `),
-                );
-            } */
-
-            // await interaction.editReply({ embeds: [embed, ...forecastEmbeds] });
             const embed = new EmbedBuilder()
                 .setAuthor({
                     name: json.location.name,

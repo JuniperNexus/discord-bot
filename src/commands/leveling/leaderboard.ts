@@ -1,5 +1,5 @@
 import { colors } from '../../config';
-import { supabase } from '../../services/supabase';
+import { getLeaderBoard } from '../../db';
 import { Command } from '../../types';
 import { embeds, logger } from '../../utils';
 
@@ -20,22 +20,7 @@ export const command: Command = {
                 return;
             }
 
-            const { data, error } = await supabase
-                .from('VoiceLevel')
-                .select('user_id, xp, level')
-                .eq('guild_id', guild.id)
-                .order('xp');
-
-            if (error) {
-                logger.error('Error fetching leaderboard:', JSON.stringify(error));
-                await interaction.editReply({ embeds: [embeds.error('failed to fetch leaderboard.')] });
-                return;
-            }
-
-            const leaderBoard = data
-                .map(e => ({ ...e, xp: parseInt(e.xp) }))
-                .sort((a, b) => b.xp - a.xp)
-                .slice(0, LIMIT);
+            const leaderBoard = await getLeaderBoard(guild.id, LIMIT);
 
             if (leaderBoard.length === 0) {
                 await interaction.editReply({
@@ -49,9 +34,9 @@ export const command: Command = {
                 leaderBoard
                     ? leaderBoard
                           .map((e, i) => {
-                              const user = guild.members.cache.get(e.user_id);
+                              const user = guild.members.cache.get(e.user_id) || { displayName: e.user_id };
 
-                              return `> **${i + 1}.** ${user?.nickname || user?.user.username} - level ${e.level} | xp: ${e.xp}`;
+                              return `> **${i + 1}.** ${user.displayName} - level ${e.level} | xp: ${e.xp}`;
                           })
                           .join('\n')
                     : 'leaderboard is empty',

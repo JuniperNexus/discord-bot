@@ -1,0 +1,188 @@
+{
+    "_meta": {
+        "columns": {},
+        "schemas": {},
+        "tables": {}
+    },
+    "dialect": "postgresql",
+    "enums": {},
+    "id": "2f0778f8-779c-4728-abe6-5febc0672c99",
+    "prevId": "00000000-0000-0000-0000-000000000000",
+    "schemas": {},
+    "tables": {
+        "public.Coin": {
+            "columns": {
+                "amount": {
+                    "name": "amount",
+                    "notNull": false,
+                    "primaryKey": false,
+                    "type": "integer"
+                },
+                "event_name": {
+                    "name": "event_name",
+                    "notNull": false,
+                    "primaryKey": false,
+                    "type": "text"
+                },
+                "id": {
+                    "name": "id",
+                    "notNull": true,
+                    "primaryKey": true,
+                    "type": "serial"
+                },
+                "operator": {
+                    "name": "operator",
+                    "notNull": false,
+                    "primaryKey": false,
+                    "type": "text"
+                },
+                "reason": {
+                    "name": "reason",
+                    "notNull": false,
+                    "primaryKey": false,
+                    "type": "text"
+                },
+                "timestamp": {
+                    "name": "timestamp",
+                    "notNull": true,
+                    "primaryKey": false,
+                    "type": "timestamp"
+                },
+                "user_id": {
+                    "name": "user_id",
+                    "notNull": false,
+                    "primaryKey": false,
+                    "type": "text"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "foreignKeys": {
+                "Coin_event_name_Event_event_name_fk": {
+                    "columnsFrom": ["event_name"],
+                    "columnsTo": ["event_name"],
+                    "name": "Coin_event_name_Event_event_name_fk",
+                    "onDelete": "cascade",
+                    "onUpdate": "no action",
+                    "tableFrom": "Coin",
+                    "tableTo": "Event"
+                },
+                "Coin_user_id_User_user_id_fk": {
+                    "columnsFrom": ["user_id"],
+                    "columnsTo": ["user_id"],
+                    "name": "Coin_user_id_User_user_id_fk",
+                    "onDelete": "cascade",
+                    "onUpdate": "no action",
+                    "tableFrom": "Coin",
+                    "tableTo": "User"
+                }
+            },
+            "indexes": {},
+            "name": "Coin",
+            "schema": "",
+            "uniqueConstraints": {}
+        },
+        "public.Event": {
+            "columns": {
+                "event_name": {
+                    "name": "event_name",
+                    "notNull": true,
+                    "primaryKey": false,
+                    "type": "text"
+                },
+                "id": {
+                    "name": "id",
+                    "notNull": true,
+                    "primaryKey": true,
+                    "type": "serial"
+                },
+                "timestamp": {
+                    "name": "timestamp",
+                    "notNull": true,
+                    "primaryKey": false,
+                    "type": "timestamp"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "foreignKeys": {},
+            "indexes": {},
+            "name": "Event",
+            "schema": "",
+            "uniqueConstraints": {}
+        },
+        "public.User": {
+            "columns": {
+                "id": {
+                    "name": "id",
+                    "notNull": true,
+                    "primaryKey": true,
+                    "type": "serial"
+                },
+                "user_id": {
+                    "name": "user_id",
+                    "notNull": true,
+                    "primaryKey": false,
+                    "type": "text"
+                },
+                "username": {
+                    "name": "username",
+                    "notNull": true,
+                    "primaryKey": false,
+                    "type": "text"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "foreignKeys": {},
+            "indexes": {},
+            "name": "User",
+            "schema": "",
+            "uniqueConstraints": {}
+        },
+        "public.VoiceLevel": {
+            "columns": {
+                "guild_id": {
+                    "name": "guild_id",
+                    "notNull": true,
+                    "primaryKey": false,
+                    "type": "text"
+                },
+                "id": {
+                    "name": "id",
+                    "notNull": true,
+                    "primaryKey": true,
+                    "type": "serial"
+                },
+                "level": {
+                    "name": "level",
+                    "notNull": false,
+                    "primaryKey": false,
+                    "type": "text"
+                },
+                "time_spent": {
+                    "name": "time_spent",
+                    "notNull": false,
+                    "primaryKey": false,
+                    "type": "text"
+                },
+                "user_id": {
+                    "name": "user_id",
+                    "notNull": true,
+                    "primaryKey": false,
+                    "type": "text"
+                },
+                "xp": {
+                    "name": "xp",
+                    "notNull": true,
+                    "primaryKey": false,
+                    "type": "text"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "foreignKeys": {},
+            "indexes": {},
+            "name": "VoiceLevel",
+            "schema": "",
+            "uniqueConstraints": {}
+        }
+    },
+    "version": "7"
+}
