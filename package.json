@@ -14,11 +14,11 @@
         "knip": "knip",
         "knip:fix": "knip --fix",
         "lint": "eslint . --ext .ts",
+        "prepare": "husky",
         "start": "cross-env NODE_ENV=production node dist/index.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "dependencies": {
-        "@google/generative-ai": "^0.12.0",
         "@supabase/supabase-js": "^2.43.4",
         "cli-color": "^2.0.4",
         "cross-env": "^7.0.3",
@@ -36,7 +36,6 @@
         "@types/node": "^20.13.0",
         "@typescript-eslint/eslint-plugin": "^7.11.0",
         "@typescript-eslint/parser": "^7.11.0",
-        "esbuild": "^0.21.4",
         "eslint": "^8.57.0",
         "eslint-config-prettier": "^9.1.0",
         "eslint-plugin-prettier": "^5.1.3",
