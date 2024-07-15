@@ -32,45 +32,47 @@ To get started with the Juniper Nexus Discord Bot, follow these steps:
 
 1. **Clone the repository**:
 
-    ```bash
+    ```sh
     git clone https://github.com/JuniperNexus/discord-bot.git
     cd discord-bot
     ```
 
 2. **Install dependencies**:
 
-    ```bash
-    pnpm install
+    ```sh
+    npm install
     ```
 
 3. **Build the project**:
-    ```bash
-    pnpm build
+    ```sh
+    npm run build
     ```
 
 ## Configuration
 
 Create a `.env` file in the root directory of the project or copy the example `.env.example` and add your Discord bot token and other necessary configurations:
 
-```bash
+```sh
 cp .env.example .env
 ```
 
 Edit the `.env` file with the following values:
 
-```bash
-NODE_ENV="production" # or "development"
-
+```dotenv
 # Discord Bot Token
+# https://discord.com/developers/applications
 TOKEN=
 
 # Discord Bot Client ID
+# https://discord.com/developers/applications
 CLIENT_ID=
 
 # Discord Guild ID
+# https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-
 GUILD_ID=
 
 # Discord User ID of the bot owner
+# https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-
 OWNER_ID=
 
 # Discord Role ID for Juniper Nexus members
@@ -79,11 +81,9 @@ JPN_ROLE_ID=
 # Discord Role ID for people interested in the Juniper Nexus
 INTERESTED_ROLE_ID=
 
-# Supabase URL
-SUPABASE_URL=
-
-# Supabase Anonymous Key
-SUPABASE_ANON_KEY=
+# PostgreSQL Database URL
+# https://www.postgresql.org/docs/current/libpq-connect.html#LIBPQ-CONNSTRING
+DATABASE_URL=
 ```
 
 ## Usage
@@ -92,8 +92,8 @@ SUPABASE_ANON_KEY=
 
 For development with live reloading:
 
-```bash
-pnpm dev
+```sh
+npm run dev
 ```
 
 ### Production
@@ -104,26 +104,26 @@ To run the bot in production with PM2:
 
 1. Install PM2 globally (if not already installed):
 
-    ```bash
+    ```sh
     npm install -g pm2
     ```
 
 2. Start the bot using PM2:
 
-    ```bash
+    ```sh
     pm2 start dist/index.js --name "discord-bot"
     ```
 
 3. Save PM2 Configuration:
 
-    ```bash
+    ```sh
     pm2 save
     pm2 startup
     ```
 
 4. To manage the bot process (restart, stop, view logs):
 
-    ```bash
+    ```sh
     pm2 restart discord-bot
     pm2 stop discord-bot
     pm2 logs discord-bot
@@ -135,13 +135,13 @@ To run the bot in production with Docker:
 
 1. Build and Start the Services:
 
-    ```bash
+    ```sh
     docker compose up --build -d
     ```
 
 2. Stopping the Services:
 
-    ```bash
+    ```sh
     docker compose down
     ```
 
@@ -159,9 +159,9 @@ We welcome contributions! Please follow these steps to contribute:
 
 This project uses Husky to run pre-commit and pre-push hooks. Ensure your changes pass all checks by running:
 
-```bash
-pnpm lint
-pnpm format:fix
+```sh
+npm run lint
+npm run format:fix
 ```
 
 ## License
