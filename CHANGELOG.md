@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [4.0.1] - 2024-05-28
+
+### Fix
+
+-   Updated database connection handling in `src/db/index.ts` to retry connection after a 5-second delay upon encountering a `CONNECT_TIMEOUT` error.
+
+### Enhancements
+
+-   Updated `.env.example` with `DATABASE_URL` configuration.
+-   Updated `README.md` with setup instructions for `DATABASE_URL`.
+
 ## [4.0.0] - 2024-05-28
 
 ### Feat
