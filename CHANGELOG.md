@@ -2,7 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
-## [4.0.1] - 2024-05-28
+## [4.0.2] - 2024-07-15
+
+### Build
+
+-   Added new GitHub Actions workflow (`build.yaml`) for production builds.
+
+### Optimization
+
+-   Optimized database connection in `src/db/index.ts` for better performance and reliability.
+
+## [4.0.1] - 2024-07-15
 
 ### Fix
 
@@ -13,7 +23,7 @@ All notable changes to this project will be documented in this file.
 -   Updated `.env.example` with `DATABASE_URL` configuration.
 -   Updated `README.md` with setup instructions for `DATABASE_URL`.
 
-## [4.0.0] - 2024-05-28
+## [4.0.0] - 2024-07-04
 
 ### Feat
 
@@ -26,14 +36,14 @@ All notable changes to this project will be documented in this file.
 
 -   Updated multiple command files, event handlers, and configuration files to accommodate Drizzle ORM.
 
-## [3.3.0] - 2024-05-27
+## [3.3.0] - 22024-07-04
 
 ### Chore
 
 -   Refactored multiple command files and event handlers to utilize color constants defined in `colors.ts`.
 -   Added `colors.ts` to manage color constants centrally.
 
-## [3.2.0] - 2024-05-27
+## [3.2.0] - 2024-06-20
 
 ### Refactor
 
@@ -48,7 +58,7 @@ All notable changes to this project will be documented in this file.
 -   Refined utility commands (`listevents`, `weather`) for better error traceability.
 -   Enhanced event handlers (`interactionCreate`, `ready`, `voiceStateUpdate`) with specific error logging.
 
-## [3.1.1] - 2024-05-26
+## [3.1.1] - 2024-06-18
 
 ### Chore
 
