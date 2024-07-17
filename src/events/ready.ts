@@ -10,9 +10,14 @@ export const event: Event<'ready'> = {
 
     execute: async client => {
         try {
-            const setActivity = () => {
+            const setActivity = async () => {
                 const guild = client.guilds.cache.get(env.GUILD_ID);
-                const memberCount = guild?.memberCount ?? 0;
+                if (!guild) {
+                    logger.error('Failed to set activity:', 'Guild not found');
+                    return;
+                }
+
+                const memberCount = guild.memberCount ?? 0;
 
                 client.user?.setPresence({
                     activities: [
@@ -27,7 +32,10 @@ export const event: Event<'ready'> = {
 
             const updateGuildMember = async () => {
                 const guild = client.guilds.cache.get(env.GUILD_ID);
-                if (!guild) return;
+                if (!guild) {
+                    logger.error('Failed to set activity:', 'Guild not found');
+                    return;
+                }
 
                 const members = guild.members.cache;
                 if (!members) return;

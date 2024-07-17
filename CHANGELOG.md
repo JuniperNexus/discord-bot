@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [4.0.3] - 2024-07-17
+
+### Chore
+
+-   Removed unused `cross-env` dependency.
+-   Updated Node.js version requirement to `>=19.9.0`.
+-   Removed obsolete GitHub Actions workflow (`build.yaml`).
+-   Updated dependencies in `package.json`.
+-   Refactored `ready.ts` to handle cases where guild might not be found.
+-   Added `GatewayIntentBits.GuildMembers` to client intents in `index.ts`.
+
 ## [4.0.2] - 2024-07-15
 
 ### Build

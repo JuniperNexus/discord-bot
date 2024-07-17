@@ -4,7 +4,12 @@ import { Command } from './types';
 import { logger, registerCommands, registerEvents } from './utils';
 
 const client = new Client({
-    intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildVoiceStates],
+    intents: [
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.GuildVoiceStates,
+        GatewayIntentBits.GuildMembers,
+    ],
 });
 
 client.commands = new Collection<string, Command>();
