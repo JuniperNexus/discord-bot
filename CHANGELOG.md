@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file.
 
+## [4.1.0] - 2024-07-19
+
+### Feat
+
+-   Updated `src/db/index.ts` to include new queries and schema.
+-   Added new query files:
+    -   `src/db/queries/coin.ts`
+    -   `src/db/queries/event.ts`
+    -   `src/db/queries/user.ts`
+    -   `src/db/queries/voice-level.ts`
+-   Added new schema files:
+    -   `src/db/schema/achievements-table.ts`
+    -   `src/db/schema/coin-table.ts`
+    -   `src/db/schema/event-table.ts`
+    -   `src/db/schema/index.ts`
+    -   `src/db/schema/user-table.ts`
+    -   `src/db/schema/voice-table.ts`
+
+### Changes
+
+-   Deleted outdated `src/db/queries.ts` and `src/db/schema.ts`.
+
+### Modified
+
+-   Modified `src/events/ready.ts` for initialization tasks.
+
 ## [4.0.3] - 2024-07-17
 
 ### Chore
