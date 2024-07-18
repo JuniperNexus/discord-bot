@@ -2,9 +2,6 @@ import { drizzle, PostgresJsDatabase } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 import { env } from '../config';
 
-export * from './schema';
-export * from './queries';
-
 const connectDatabase = (): PostgresJsDatabase => {
     const client = postgres(env.DATABASE_URL, {
         max: 1,
@@ -16,3 +13,6 @@ const connectDatabase = (): PostgresJsDatabase => {
 };
 
 export const db = connectDatabase();
+
+export * from './schema';
+export * from './queries';

@@ -10,19 +10,17 @@ export const event: Event<'ready'> = {
 
     execute: async client => {
         try {
-            const setActivity = async () => {
+            const setActivity = () => {
                 const guild = client.guilds.cache.get(env.GUILD_ID);
                 if (!guild) {
                     logger.error('Failed to set activity:', 'Guild not found');
                     return;
                 }
 
-                const memberCount = guild.memberCount ?? 0;
-
                 client.user?.setPresence({
                     activities: [
                         {
-                            name: `${memberCount} members | /help`,
+                            name: `${guild.memberCount} members | /help`,
                             type: ActivityType.Watching,
                         },
                     ],

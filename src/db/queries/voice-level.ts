@@ -1,56 +1,5 @@
 import { and, desc, eq, sql } from 'drizzle-orm';
-import {
-    Coin,
-    db,
-    Event,
-    InsertCoin,
-    InsertEvent,
-    InsertUser,
-    InsertVoiceLevel,
-    SelectCoin,
-    SelectEvent,
-    SelectUser,
-    SelectVoiceLevel,
-    User,
-    VoiceLevel,
-} from './index';
-
-export const createEvent = async (eventName: InsertEvent['event_name']) => {
-    await db.insert(Event).values({ event_name: eventName });
-};
-
-export const getUserTransactions = async (
-    userId: SelectCoin['user_id'],
-): Promise<
-    Array<{ amount: SelectCoin['amount']; timestamp: SelectCoin['timestamp']; operator: SelectCoin['operator'] }>
-> => {
-    const transactions = await db
-        .select({
-            amount: Coin.amount,
-            timestamp: Coin.timestamp,
-            operator: Coin.operator,
-        })
-        .from(Coin)
-        .where(eq(Coin.user_id, userId));
-
-    return transactions;
-};
-
-export const getUserById = async (userId: SelectUser['user_id']): Promise<SelectUser> => {
-    const user = await db.select().from(User).where(eq(User.user_id, userId)).limit(1);
-
-    return user[0];
-};
-
-export const getEvents = async (): Promise<Array<SelectEvent>> => {
-    const events = await db.select().from(Event);
-
-    return events;
-};
-
-export const insertCoin = async (data: InsertCoin) => {
-    await db.insert(Coin).values(data);
-};
+import { db, InsertVoiceLevel, SelectVoiceLevel, VoiceLevel } from '../index';
 
 export const getLeaderBoard = async (
     guildId: SelectVoiceLevel['guild_id'],
@@ -97,10 +46,6 @@ export const getUserLevel = async (
         .limit(1);
 
     return level[0];
-};
-
-export const insertUser = async (data: InsertUser) => {
-    await db.insert(User).values(data);
 };
 
 export const insertVoiceLevel = async (data: InsertVoiceLevel) => {
