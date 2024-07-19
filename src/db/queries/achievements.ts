@@ -2,6 +2,11 @@ import { eq } from 'drizzle-orm';
 import { AchievementsTable, db, InsertAchievements } from '../../db';
 import { logger } from '../../utils';
 
+const char = (length: number) => {
+    const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    return Array.from({ length }, () => chars.charAt(Math.floor(Math.random() * chars.length))).join('');
+};
+
 export const insertAchievement = async (
     name: InsertAchievements['member'],
     title: InsertAchievements['title'],
@@ -9,7 +14,7 @@ export const insertAchievement = async (
     image: InsertAchievements['image'],
 ): Promise<boolean> => {
     try {
-        await db.insert(AchievementsTable).values({ member: name, title, description, image });
+        await db.insert(AchievementsTable).values({ id: char(5), member: name, title, description, image });
         return true;
     } catch (error) {
         logger.error('Error inserting achievement:', error as Error);

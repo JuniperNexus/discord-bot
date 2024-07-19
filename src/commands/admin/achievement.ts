@@ -80,7 +80,7 @@ export const command: Command = {
 
     execute: async (client, interaction) => {
         try {
-            await interaction.deferReply({ ephemeral: true });
+            await interaction.deferReply();
 
             const subcommand = interaction.options.getSubcommand();
 
@@ -97,7 +97,14 @@ export const command: Command = {
                 }
 
                 await interaction.editReply({
-                    embeds: [embeds.success(`the achievement of \`${name}\` has been inserted successfully.`)],
+                    embeds: [
+                        embeds
+                            .createEmbed(
+                                'achievement inserted',
+                                `inserted achievement of \`${name}\`\n\n> • title: ${title}\n> • description: ${description}`,
+                            )
+                            .setImage(image),
+                    ],
                 });
             } else if (subcommand === 'update') {
                 const id = interaction.options.getString('id', true);

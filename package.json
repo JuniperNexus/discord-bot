@@ -1,6 +1,6 @@
 {
     "name": "discord-bot",
-    "version": "4.2.0",
+    "version": "4.2.1",
     "description": "A feature-rich Discord bot for the Juniper Nexus guild.",
     "license": "MIT",
     "main": "src/index.ts",
@@ -16,7 +16,8 @@
         "lint": "eslint . --ext .ts",
         "migrate": "drizzle-kit migrate",
         "prepare": "husky",
-        "start": "cross-env NODE_ENV=production node dist/index.js"
+        "start": "cross-env NODE_ENV=production node dist/index.js",
+        "studio": "drizzle-kit studio"
     },
     "dependencies": {
         "cli-color": "^2.0.4",

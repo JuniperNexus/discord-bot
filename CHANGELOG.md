@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [4.2.1] - 2024-07-19
+
+### Fix
+
+-   Added `drizzle-kit studio` command to `package.json` for database studio.
+-   Improved `achievement` command responses with better formatting and image embedding.
+-   Modified `insertAchievement` query to generate and assign a unique ID for new achievements.
+
 ## [4.2.0] - 2024-07-19
 
 ### Feat
