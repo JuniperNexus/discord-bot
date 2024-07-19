@@ -1,3 +1,4 @@
+export * from './achievements';
 export * from './coin';
 export * from './event';
 export * from './user';
