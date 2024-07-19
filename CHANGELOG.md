@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [4.2.0] - 2024-07-19
+
+### Feat
+
+-   Added `src/commands/admin/achievement.ts` for managing member achievements via Discord commands.
+-   Added `src/db/queries/achievements.ts` to handle achievement database operations.
+-   Updated `src/db/queries/index.ts` to export new achievement query functions.
+-   Added functionality to insert and update achievements with Discord commands.
+-   Implemented database queries for inserting, updating, and retrieving achievements.
+
 ## [4.1.1] - 2024-07-19
 
 ### Refactor
