@@ -9,14 +9,14 @@ export const command: Command = {
     options: [
         {
             name: 'user',
-            description: 'the user to show xp for.',
+            description: 'the user to show xp.',
             type: ApplicationCommandOptionType.User,
             required: false,
         },
     ],
 
     execute: async (client, interaction) => {
-        await interaction.reply({ embeds: [embeds.loading('fetching xp...')], fetchReply: true });
+        await interaction.reply({ embeds: [embeds.loading('fletching xp...')], fetchReply: true });
 
         try {
             const user = interaction.options.getUser('user') || interaction.user;
@@ -30,7 +30,7 @@ export const command: Command = {
             const userLevel = await getUserLevel(guild.id, user.id);
 
             if (!userLevel) {
-                await interaction.editReply({ embeds: [embeds.error('user not found in database.')] });
+                await interaction.editReply({ embeds: [embeds.error('user not found in the database.')] });
                 return;
             }
 

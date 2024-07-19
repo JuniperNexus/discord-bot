@@ -5,11 +5,11 @@ import { embeds, logger } from '../../utils';
 
 export const command: Command = {
     name: 'feedback',
-    description: 'Send feedback about the bot to the bot owner.',
+    description: 'send feedback about the bot to the bot owner.',
     options: [
         {
             name: 'message',
-            description: 'Your feedback message.',
+            description: 'the feedback message you want to send.',
             type: ApplicationCommandOptionType.String,
             required: true,
         },
@@ -25,14 +25,14 @@ export const command: Command = {
             const embed = embeds
                 .createEmbed(
                     'new feedback',
-                    `${feedbackMessage}\n\nfrom:\n{user.username}#${user.discriminator}\n{user.id}`,
+                    `${feedbackMessage}\n\nfrom:\n${user.username}#${user.discriminator}\n${user.id}`,
                 )
                 .setTimestamp();
 
             const owner = await client.users.fetch(env.OWNER_ID);
 
             if (!owner) {
-                throw new Error('Owner user not found.');
+                throw new Error('owner user not found.');
             }
 
             await owner.send({ embeds: [embed] });

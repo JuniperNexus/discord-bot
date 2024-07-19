@@ -55,7 +55,7 @@ export const command: Command = {
             await interaction.reply({ embeds: [embed] });
         } catch (error) {
             logger.error('Error executing userinfo command:', error as Error);
-            await interaction.reply({ embeds: [embeds.error('Failed to show user info.')] });
+            await interaction.reply({ embeds: [embeds.error('failed to show user info.')] });
         }
     },
 };

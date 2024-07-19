@@ -24,7 +24,7 @@ export const command: Command = {
             await interaction.reply({ embeds: [embed] });
         } catch (error) {
             logger.error('Error executing info command:', error as Error);
-            await interaction.reply({ embeds: [embeds.error('failed to get info.')] });
+            await interaction.reply({ embeds: [embeds.error('failed to get the info.')] });
         }
     },
 };

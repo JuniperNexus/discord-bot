@@ -13,7 +13,7 @@ export const command: Command = {
             const result = outcome < 0.5 ? 'heads' : 'tails';
 
             await interaction.reply({
-                embeds: [embeds.custom(`You flipped a ${result}.`, colors.yellow, '🪙')],
+                embeds: [embeds.custom(`you get ${result} when you flip a coin.`, colors.yellow, '🪙')],
             });
         } catch (error) {
             logger.error('Error executing coinflip command:', error as Error);

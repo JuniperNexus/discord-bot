@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [4.1.1] - 2024-07-19
+
+### Refactor
+
+-   Renamed and updated commands for clarity and consistency:
+    -   Renamed `src/commands/currency/remove.ts` to `src/commands/admin/decrease.ts`.
+    -   Renamed `src/commands/currency/give.ts` to `src/commands/admin/increase.ts`.
+-   Modified descriptions and messages for better readability and consistency across commands.
+-   Updated `src/commands/admin/createevent.ts` to improve event creation feedback.
+-   Adjusted command descriptions in various files to follow a consistent style.
+-   Refined error handling and logging messages in commands.
+
 ## [4.1.0] - 2024-07-19
 
 ### Feat
@@ -142,7 +154,7 @@ All notable changes to this project will be documented in this file.
 -   Updated `rank.ts` and `xp.ts` to parse `time_spent` from string to integer using `parseInt()`.
 -   Ensured consistent `time_spent` calculation across leveling commands.
 -   Updated `leaderboard.ts` and `rank.ts` to remove unnecessary `time_spent` sorting.
--   Dynamically calculate user level based on XP in `voiceStateUpdate.ts`.
+-   Dynamically calculate user level based on xp in `voiceStateUpdate.ts`.
 
 ### Enhancements
 
@@ -180,19 +192,19 @@ All notable changes to this project will be documented in this file.
 
 ### Refactor
 
--   Simplified XP and level calculation logic for voice state updates.
+-   Simplified xp and level calculation logic for voice state updates.
 -   Updated types in DatabaseGenerated.ts to use strings for XP, level, and time_spent.
 
 ## [2.0.0] - 2024-05-25
 
 ### Features
 
--   Refactored leveling commands and events to use voice channel time tracking for XP calculation.
+-   Refactored leveling commands and events to use voice channel time tracking for xp calculation.
 -   Added time conversion utility (`convertTime`) for time spent in voice channels.
 -   Updated `leaderboard` command to use `voice_levels` table and ordered by `time_spent`.
 -   Refactored `rank` command to display time spent in minutes.
 -   Refactored `xp` command to display time spent in minutes.
--   Updated `voiceStateUpdate` event to track time spent in voice channels and calculate XP based on that.
+-   Updated `voiceStateUpdate` event to track time spent in voice channels and calculate xp based on that.
 
 ### Changes
 
@@ -220,7 +232,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 -   Added voiceStateUpdate event handling:
-    -   voiceStateUpdate.ts: Track user XP and levels based on time spent in voice channels.
+    -   voiceStateUpdate.ts: Track user xp and levels based on time spent in voice channels.
 -   Added automated build and deploy workflow to production:
     -   Added .github/workflows/publish.yaml.
 -   Added permissions and concurrency settings to publish workflow:
@@ -236,12 +248,12 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 -   Added leveling commands and events:
-    -   leaderboard.ts: Display server XP leaderboard.
+    -   leaderboard.ts: Display server xp leaderboard.
     -   rank.ts: Show user's rank based on XP.
-    -   xp.ts: Show user's XP and level.
+    -   xp.ts: Show user's xp and level.
     -   serverinfo.ts: Show server information.
     -   translate.ts: Translate text between languages.
--   Added messageCreate.ts event to track user XP and levels.
+-   Added messageCreate.ts event to track user xp and levels.
 -   Introduces a command cooldown system to prevent spamming. (Added cooldown mechanism)
 -   Enhanced error handling and user experience in commands and events:
     -   help.ts: Enhanced error handling and options display.

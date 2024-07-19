@@ -8,7 +8,7 @@ export const command: Command = {
     options: [
         {
             name: 'user',
-            description: 'the user to show the avatar of.',
+            description: 'the user to show the avatar.',
             type: ApplicationCommandOptionType.User,
             required: false,
         },

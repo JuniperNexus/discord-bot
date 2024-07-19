@@ -2,7 +2,7 @@ import { ActivityType } from 'discord.js';
 import { env } from '../config';
 import { getUserById, insertUser } from '../db';
 import { Event } from '../types';
-import { logger } from '../utils';
+import { logger, timer } from '../utils';
 
 export const event: Event<'ready'> = {
     name: 'ready',
@@ -59,8 +59,8 @@ export const event: Event<'ready'> = {
                 }
             };
 
-            setInterval(setActivity, 15 * 1000);
-            setInterval(updateGuildMember, 10 * 60 * 1000);
+            setInterval(setActivity, timer.second(15));
+            setInterval(updateGuildMember, timer.minute(10));
 
             logger.info(`Logged in as ${client.user!.tag}`);
 

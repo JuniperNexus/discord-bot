@@ -14,7 +14,7 @@ export const clientUptime = (uptimeMs: number) => {
 
 export const command: Command = {
     name: 'uptime',
-    description: 'how long the bot has been online.',
+    description: 'how long the bot has been online?',
 
     execute: async (client, interaction) => {
         try {

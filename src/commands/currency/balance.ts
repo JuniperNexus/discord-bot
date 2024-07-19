@@ -12,13 +12,13 @@ export const command: Command = {
     options: [
         {
             name: 'user',
-            description: 'the user to show balance for.',
+            description: 'users who wish to view their balance.',
             type: ApplicationCommandOptionType.User,
         },
     ],
 
     execute: async (client, interaction) => {
-        await interaction.reply({ embeds: [embeds.loading('fetching balance...')], fetchReply: true });
+        await interaction.reply({ embeds: [embeds.loading('fetching user balance...')], fetchReply: true });
 
         try {
             const user = interaction.options.getUser('user') || interaction.user;
@@ -26,7 +26,7 @@ export const command: Command = {
             const transactions = await getUserTransactions(user.id);
 
             if (!transactions) {
-                await interaction.editReply({ embeds: [embeds.error('no transactions found.')] });
+                await interaction.editReply({ embeds: [embeds.error('no transactions were found.')] });
                 return;
             }
 
@@ -52,9 +52,9 @@ export const command: Command = {
                                     ? interaction.guild?.members.cache.get(t.operator)?.displayName
                                     : 'unknown';
 
-                                return `> **${i + 1}.** [${type}] \`${amount}\` coins on ${dayjs(t.timestamp).format(
-                                    'DD/MM/YYYY',
-                                )} by ${operator}`;
+                                return `> **${i + 1}.** \`${amount}\` coin(s) were ${type} on ${dayjs(
+                                    t.timestamp,
+                                ).format('DD/MM/YYYY')} by ${operator}`;
                             })
                             .join('\n')}`,
                     )
@@ -101,7 +101,9 @@ export const command: Command = {
             });
         } catch (error) {
             logger.error('Error executing balance command:', error as Error);
-            await interaction.editReply({ embeds: [embeds.error('failed to get balance.')] });
+            await interaction.editReply({
+                embeds: [embeds.error('unable to retrieve user balance and transactions.')],
+            });
         }
     },
 };

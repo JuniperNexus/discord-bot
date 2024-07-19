@@ -8,7 +8,7 @@ export const command: Command = {
     options: [
         {
             name: 'message',
-            description: 'the message to say.',
+            description: 'message to be spoken by the bot.',
             type: ApplicationCommandOptionType.String,
             required: true,
         },

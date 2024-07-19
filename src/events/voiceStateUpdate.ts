@@ -75,7 +75,7 @@ export const event: Event<'voiceStateUpdate'> = {
                 if (level > parseInt(user.level)) {
                     const embed = embeds
                         .createEmbed(
-                            'Level Up!',
+                            'level up!',
                             `${newState.member}, you have leveled up to level ${level} in ${newState.guild.name}.`,
                             colors.green,
                         )

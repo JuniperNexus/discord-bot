@@ -7,16 +7,16 @@ const options = ['rock', 'paper', 'scissors'];
 
 export const command: Command = {
     name: 'rps',
-    description: 'Play Rock, Paper, Scissors against the bot.',
+    description: 'play rock, paper, scissors against the bot.',
 
     execute: async (client, interaction) => {
         try {
             const botChoice = options[Math.floor(Math.random() * options.length)];
 
             const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
-                new ButtonBuilder().setCustomId(`rps-rock`).setLabel('Rock').setStyle(ButtonStyle.Secondary),
-                new ButtonBuilder().setCustomId(`rps-paper`).setLabel('Paper').setStyle(ButtonStyle.Secondary),
-                new ButtonBuilder().setCustomId(`rps-scissors`).setLabel('Scissors').setStyle(ButtonStyle.Secondary),
+                new ButtonBuilder().setCustomId(`rps-rock`).setLabel('rock').setStyle(ButtonStyle.Secondary),
+                new ButtonBuilder().setCustomId(`rps-paper`).setLabel('paper').setStyle(ButtonStyle.Secondary),
+                new ButtonBuilder().setCustomId(`rps-scissors`).setLabel('scissors').setStyle(ButtonStyle.Secondary),
             );
 
             const message = await interaction.reply({
@@ -69,7 +69,7 @@ export const command: Command = {
             });
         } catch (error) {
             logger.error('Error executing rps command:', error as Error);
-            await interaction.reply({ embeds: [embeds.error('failed to play Rock, Paper, Scissors.')] });
+            await interaction.reply({ embeds: [embeds.error('failed to play rock, paper, scissors.')] });
         }
     },
 };

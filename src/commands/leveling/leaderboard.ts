@@ -30,7 +30,7 @@ export const command: Command = {
             }
 
             const embed = embeds.createEmbed(
-                `xp leaderboard for ${guild.name}`,
+                `xp leaderboard of ${guild.name}`,
                 leaderBoard
                     ? leaderBoard
                           .map((e, i) => {
@@ -45,7 +45,7 @@ export const command: Command = {
             await interaction.editReply({ embeds: [embed] });
         } catch (error) {
             logger.error('Error executing leaderboard command:', error as Error);
-            await interaction.editReply({ embeds: [embeds.error('Failed to fetch leaderboard.')] });
+            await interaction.editReply({ embeds: [embeds.error('failed to fetch leaderboard.')] });
         }
     },
 };

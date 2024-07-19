@@ -6,7 +6,7 @@ const LIMIT = 100;
 
 export const command: Command = {
     name: 'rank',
-    description: 'shows your current rank based on XP in the server.',
+    description: 'shows your current rank based on xp in the server.',
 
     execute: async (client, interaction) => {
         await interaction.reply({ embeds: [embeds.loading('fetching rank...')], fetchReply: true });
@@ -26,7 +26,7 @@ export const command: Command = {
 
             if (userIndex === -1) {
                 await interaction.editReply({
-                    embeds: [embeds.custom('you are not in the leaderboard (top 100).', '#fa8075', '🏆')],
+                    embeds: [embeds.custom(`you are not on the leaderboard (top ${LIMIT}).`, '#fa8075', '🏆')],
                 });
                 return;
             }

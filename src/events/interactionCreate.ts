@@ -20,7 +20,7 @@ export const event: Event<'interactionCreate'> = {
 
             if (env.NODE_ENV === 'development' && user.id !== env.OWNER_ID) {
                 await interaction.reply({
-                    embeds: [embeds.error('This command is not available in development mode.')],
+                    embeds: [embeds.error('this command is not available in development mode.')],
                     ephemeral: true,
                 });
                 return;
@@ -39,7 +39,7 @@ export const event: Event<'interactionCreate'> = {
                 await interaction.reply({
                     embeds: [
                         embeds.error(
-                            `Please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${commandName}\` command.`,
+                            `please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${commandName}\` command.`,
                         ),
                     ],
                     ephemeral: true,
