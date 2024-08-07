@@ -1,6 +1,7 @@
+import { $Enums } from '@prisma/client';
 import { ApplicationCommandOptionType } from 'discord.js';
 import { colors } from '../../config';
-import { getEvents, getUserById, insertCoin } from '../../db';
+import { prisma } from '../../lib/prisma';
 import { Command } from '../../types';
 import { embeds, logger } from '../../utils';
 
@@ -23,8 +24,8 @@ export const command: Command = {
         },
         {
             name: 'event',
-            description: 'the event name associated with the coin(s).',
-            type: ApplicationCommandOptionType.String,
+            description: 'the event id associated with the coin(s).',
+            type: ApplicationCommandOptionType.Number,
             required: true,
         },
     ],
@@ -35,25 +36,27 @@ export const command: Command = {
         try {
             const user = interaction.options.getUser('user', true);
             const amount = interaction.options.getNumber('amount', true);
-            const event = interaction.options.getString('event', true);
+            const eventId = interaction.options.getNumber('event', true);
 
-            const userData = await getUserById(user.id);
-            if (!userData) {
+            const existing = await prisma.users.findUnique({ where: { discord_id: user.id } });
+            if (!existing) {
                 await interaction.editReply({ embeds: [embeds.error('user not found in the database.')] });
                 return;
             }
 
-            const events = await getEvents();
-            if (events.length === 0) {
-                await interaction.editReply({ embeds: [embeds.info('no events were found.')] });
+            const events = await prisma.events.findMany();
+
+            if (!events) {
+                await interaction.editReply({ embeds: [embeds.error('no events were found.')] });
                 return;
             }
-            const isEvent = events?.find(e => e.event_name === event);
 
-            if (!isEvent) {
+            const event = events.find(e => e.id === eventId);
+
+            if (!event) {
                 const embed = embeds.createEmbed(
                     'not found.',
-                    `event \`${event}\` not found.\n\nevents available:\n${events?.map(e => `> • ${e.event_name}`).join('\n')}`,
+                    `event \`${event}\` not found.\n\nevents available:\n${events?.map(e => `> • ${e.name}`).join('\n')}`,
                     colors.red,
                 );
 
@@ -61,15 +64,20 @@ export const command: Command = {
                 return;
             }
 
-            await insertCoin({
-                user_id: userData.user_id,
-                amount,
-                event_name: event,
-                operator: interaction.user.id,
+            await prisma.coins.create({
+                data: {
+                    user_id: existing.id,
+                    type: $Enums.Type.EARNED,
+                    amount: amount,
+                    reason: '',
+                    operator: interaction.user.id,
+                },
             });
 
             await interaction.editReply({
-                embeds: [embeds.success(`${user.displayName} received \`${amount}\` coin(s) from the ${event} event.`)],
+                embeds: [
+                    embeds.success(`${user.displayName} received \`${amount}\` coin(s) from the ${event.name} event.`),
+                ],
             });
         } catch (error) {
             logger.error('Error executing give command:', error as Error);

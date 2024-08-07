@@ -1,6 +1,7 @@
+import { $Enums } from '@prisma/client';
 import dayjs from 'dayjs';
 import { ActionRowBuilder, ApplicationCommandOptionType, ButtonBuilder, ButtonStyle, ComponentType } from 'discord.js';
-import { getUserTransactions } from '../../db';
+import { prisma } from '../../lib/prisma';
 import { Command } from '../../types';
 import { embeds, logger, timer } from '../../utils';
 
@@ -21,9 +22,19 @@ export const command: Command = {
         await interaction.reply({ embeds: [embeds.loading('fetching user balance...')], fetchReply: true });
 
         try {
-            const user = interaction.options.getUser('user') || interaction.user;
+            const member = interaction.options.getUser('user') || interaction.user;
 
-            const transactions = await getUserTransactions(user.id);
+            const user = await prisma.users.findUnique({ where: { discord_id: member.id } });
+            if (!user) {
+                await interaction.editReply({ embeds: [embeds.error('user not found.')] });
+                return;
+            }
+
+            const transactions = await prisma.coins.findMany({
+                where: {
+                    user_id: user.id,
+                },
+            });
 
             if (!transactions) {
                 await interaction.editReply({ embeds: [embeds.error('no transactions were found.')] });
@@ -41,20 +52,31 @@ export const command: Command = {
 
                 const embed = embeds
                     .createEmbed(
-                        `${user.displayName}'s balance and transactions`,
+                        `${member.displayName}'s balance and transactions`,
                         `balance: ${balance}\n\ntransactions:\n${transactions
                             .slice(start, end)
                             .map((t, i) => {
-                                const amount = t.amount || 0;
-                                const type = amount > 0 ? 'added' : 'removed';
+                                let type;
+
+                                switch (t.type) {
+                                    case $Enums.Type.EARNED:
+                                        type = 'earned';
+                                        break;
+                                    case $Enums.Type.SPENT:
+                                        type = 'spent';
+                                        break;
+                                    case $Enums.Type.DEDUCTED:
+                                        type = 'deducted';
+                                        break;
+                                }
 
                                 const operator = t.operator
                                     ? interaction.guild?.members.cache.get(t.operator)?.displayName
                                     : 'unknown';
 
-                                return `> **${i + 1}.** \`${amount}\` coin(s) were ${type} on ${dayjs(
-                                    t.timestamp,
-                                ).format('DD/MM/YYYY')} by ${operator}`;
+                                return `> **${i + 1}.** \`${t.amount}\` coin(s) were ${type} on ${dayjs(
+                                    t.created_at,
+                                ).format('MMMM D, YYYY')} by ${operator}`;
                             })
                             .join('\n')}`,
                     )
@@ -81,7 +103,7 @@ export const command: Command = {
             const message = await interaction.editReply({ embeds: [getEmbed(page)], components: [getButtons(page)] });
 
             const collector = message.createMessageComponentCollector({
-                filter: i => i.user.id === user.id,
+                filter: i => i.user.id === member.id,
                 componentType: ComponentType.Button,
                 time: timer.minute(5),
             });

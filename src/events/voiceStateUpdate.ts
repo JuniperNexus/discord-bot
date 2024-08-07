@@ -1,12 +1,8 @@
 import dayjs from 'dayjs';
-import { and, eq } from 'drizzle-orm';
 import { colors } from '../config';
-import { db, getUserLevel, insertVoiceLevel, VoiceLevel } from '../db';
+import { prisma } from '../lib/prisma';
 import { Event } from '../types';
-import { embeds, logger } from '../utils';
-
-const XP_PER_MINUTE = 0.0167;
-const XP_PER_LEVEL = 100;
+import { calcLevel, embeds, logger } from '../utils';
 
 const mapUserJoin = new Map<string, Date>();
 
@@ -17,21 +13,15 @@ export const event: Event<'voiceStateUpdate'> = {
         if (oldState.channelId === newState.channelId || !newState.member || newState.member.user.bot) return;
 
         try {
-            const guildId = newState.guild.id;
             const userId = newState.member.id;
 
             if (!oldState.channelId && newState.channelId) {
                 mapUserJoin.set(userId, dayjs().toDate());
 
-                const user = await getUserLevel(guildId, userId);
-
-                if (!user) {
-                    await insertVoiceLevel({
-                        user_id: userId,
-                        guild_id: guildId,
-                        xp: '0',
-                        level: '0',
-                        time_spent: '0',
+                const existing = await prisma.users.findUnique({ where: { discord_id: userId } });
+                if (!existing) {
+                    await prisma.users.create({
+                        data: { discord_id: userId, username: newState.member.user.username },
                     });
                 }
             }
@@ -46,37 +36,32 @@ export const event: Event<'voiceStateUpdate'> = {
 
                 if (timeSpent <= 0) return;
 
-                let user = await getUserLevel(guildId, userId);
+                const user = await prisma.users.findUnique({ where: { discord_id: userId } });
+                if (!user) return;
 
-                user = user ?? { xp: '0', level: '0', time_spent: '0' };
+                const data = await prisma.voiceLevels.findMany({
+                    orderBy: { time_spent: 'desc' },
+                    where: { user_id: user.id },
+                });
 
-                let xp = parseInt(user.xp) + XP_PER_MINUTE * timeSpent;
-                let level = parseInt(user.level);
-                const timeSpentInt = parseInt(user.time_spent) + timeSpent;
+                const { level: currentLevel, time_spent: currentTimeSpent } = calcLevel(
+                    data.reduce((acc, entry) => acc + entry.time_spent, 0),
+                );
 
-                const xpRequired = XP_PER_LEVEL * (level + 1);
+                const updatedData = [
+                    ...data,
+                    {
+                        time_spent: currentTimeSpent + timeSpent,
+                    },
+                ];
 
-                if (xp >= xpRequired) {
-                    xp = 0;
-                    level++;
-                }
+                const { level: newLevel } = calcLevel(updatedData.reduce((acc, entry) => acc + entry.time_spent, 0));
 
-                const updatatedUser = {
-                    xp: xp.toString(),
-                    level: level.toString(),
-                    time_spent: timeSpentInt.toString(),
-                };
-
-                await db
-                    .update(VoiceLevel)
-                    .set(updatatedUser)
-                    .where(and(eq(VoiceLevel.user_id, userId), eq(VoiceLevel.guild_id, guildId)));
-
-                if (level > parseInt(user.level)) {
+                if (newLevel > currentLevel) {
                     const embed = embeds
                         .createEmbed(
                             'level up!',
-                            `${newState.member}, you have leveled up to level ${level} in ${newState.guild.name}.`,
+                            `${newState.member}, you have leveled up to level ${newLevel} in ${newState.guild.name}.`,
                             colors.green,
                         )
                         .setTimestamp();

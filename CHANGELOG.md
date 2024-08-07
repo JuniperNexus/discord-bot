@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+## [5.0.0] - 2024-08-07
+
+### Refactor
+
+-   Migrated to Prisma for database operations.
+-   Updated `.env.example` for new environment variables.
+-   Refined `README.md` for Prisma migration.
+-   Deleted `drizzle.config.ts` as part of migration.
+-   Added multiple Prisma migration files for database schema changes.
+-   Updated schema with `schema.prisma`.
+-   Modified various admin commands to align with new database structure.
+-   Removed old database query files.
+-   Introduced new utility handlers.
+-   Adjusted event handling to accommodate new schema.
+
 ## [4.2.1] - 2024-07-19
 
 ### Fix

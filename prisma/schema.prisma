@@ -1,0 +1,87 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model Achievements {
+  id          Int      @id @default(autoincrement())
+  name        String   @db.VarChar(100)
+  description String   @db.VarChar(1000)
+  user_id     Int
+  created_at  DateTime @default(now())
+  image_url   String
+  Users       Users    @relation(fields: [user_id], references: [id])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model Coins {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  event_id   Int?
+  type       Type
+  amount     Int
+  reason     String
+  created_at DateTime @default(now())
+  operator   String
+  Events     Events?  @relation(fields: [event_id], references: [id])
+  Users      Users    @relation(fields: [user_id], references: [id])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model Events {
+  id          Int      @id @default(autoincrement())
+  name        String   @db.VarChar(100)
+  description String   @db.VarChar(1000)
+  start_date  DateTime @db.Timestamptz(6)
+  end_date    DateTime @db.Timestamptz(6)
+  created_at  DateTime @default(now()) @db.Timestamptz(6)
+  Coins       Coins[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model Profile {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  full_name  String
+  address    String
+  age        Int
+  job        String
+  email      String
+  phone      String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  Users      Users    @relation(fields: [user_id], references: [id])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model Users {
+  id           Int            @id @default(autoincrement())
+  discord_id   String         @unique
+  username     String
+  created_at   DateTime       @default(now())
+  Achievements Achievements[]
+  Coins        Coins[]
+  Profile      Profile[]
+  VoiceLevels  VoiceLevels[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model VoiceLevels {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  time_spent Int
+  created_at DateTime @default(now())
+  Users      Users    @relation(fields: [user_id], references: [id])
+}
+
+enum Type {
+  EARNED
+  SPENT
+  DEDUCTED
+}

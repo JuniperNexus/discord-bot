@@ -7,9 +7,8 @@ const envSchema = z.object({
     CLIENT_ID: z.string(),
     GUILD_ID: z.string(),
     OWNER_ID: z.string(),
-    JPN_ROLE_ID: z.string(),
+    MEMBER_ROLE_ID: z.string(),
     INTERESTED_ROLE_ID: z.string(),
-    DATABASE_URL: z.string(),
 });
 
 export const env = envSchema.parse(process.env);

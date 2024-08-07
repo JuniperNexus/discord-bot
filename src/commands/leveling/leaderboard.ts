@@ -1,7 +1,6 @@
-import { colors } from '../../config';
-import { getLeaderBoard } from '../../db';
+import { prisma } from '../../lib/prisma';
 import { Command } from '../../types';
-import { embeds, logger } from '../../utils';
+import { embeds, leaderBoard, logger } from '../../utils';
 
 const LIMIT = 10;
 
@@ -20,32 +19,31 @@ export const command: Command = {
                 return;
             }
 
-            const leaderBoard = await getLeaderBoard(guild.id, LIMIT);
+            const { success, message, data: leaderboard } = await leaderBoard(LIMIT);
 
-            if (leaderBoard.length === 0) {
-                await interaction.editReply({
-                    embeds: [embeds.custom('leaderboard is empty', colors.red, '🏆')],
-                });
+            if (!success || !leaderboard) {
+                await interaction.editReply({ embeds: [embeds.error(message)] });
                 return;
             }
 
-            const embed = embeds.createEmbed(
-                `xp leaderboard of ${guild.name}`,
-                leaderBoard
-                    ? leaderBoard
-                          .map((e, i) => {
-                              const user = guild.members.cache.get(e.user_id) || { displayName: e.user_id };
-
-                              return `> **${i + 1}.** ${user.displayName} - level ${e.level} | xp: ${e.xp}`;
-                          })
-                          .join('\n')
-                    : 'leaderboard is empty',
+            const leaderboardEntries = await Promise.all(
+                leaderboard.map(async (e, i) => {
+                    const user = await prisma.users.findUnique({ where: { id: parseInt(e.user_id) } });
+                    const member = guild.members.cache.get(user?.discord_id ?? e.user_id) ?? { displayName: e.user_id };
+                    return `> **${i + 1}.** ${member.displayName} - level ${e.level} | xp: ${e.xp.toFixed(2)}`;
+                }),
             );
+
+            const leaderboardMessage = leaderboardEntries.length
+                ? leaderboardEntries.join('\n')
+                : 'Leaderboard is empty';
+
+            const embed = embeds.createEmbed(`XP Leaderboard of ${guild.name}`, leaderboardMessage);
 
             await interaction.editReply({ embeds: [embed] });
         } catch (error) {
             logger.error('Error executing leaderboard command:', error as Error);
-            await interaction.editReply({ embeds: [embeds.error('failed to fetch leaderboard.')] });
+            await interaction.editReply({ embeds: [embeds.error('Failed to fetch leaderboard.')] });
         }
     },
 };

@@ -1,7 +1,7 @@
 import { ApplicationCommandOptionType } from 'discord.js';
-import { getUserLevel } from '../../db';
+import { prisma } from '../../lib/prisma';
 import { Command } from '../../types';
-import { convertTime, embeds, logger } from '../../utils';
+import { calcLevel, embeds, logger, timeUnit } from '../../utils';
 
 export const command: Command = {
     name: 'xp',
@@ -27,21 +27,23 @@ export const command: Command = {
                 return;
             }
 
-            const userLevel = await getUserLevel(guild.id, user.id);
-
-            if (!userLevel) {
+            const existing = await prisma.users.findUnique({ where: { discord_id: user.id } });
+            if (!existing) {
                 await interaction.editReply({ embeds: [embeds.error('user not found in the database.')] });
                 return;
             }
 
-            const xp = userLevel.xp;
-            const level = userLevel.level;
-            const time_spent = convertTime(parseInt(userLevel.time_spent), 'minutes');
+            const data = await prisma.voiceLevels.findMany({
+                orderBy: { time_spent: 'desc' },
+                where: { user_id: existing.id },
+            });
+
+            const { level, xp, time_spent } = calcLevel(data.reduce((acc, entry) => acc + entry.time_spent, 0));
 
             const embed = embeds
                 .createEmbed(
                     `xp for ${user.username}`,
-                    `${user}\n\n> • level: ${level}\n> • xp: ${xp}\n> • time spent: ${time_spent}`,
+                    `${user}\n\n> • level: ${level}\n> • xp: ${xp.toFixed(2)}\n> • time spent: ${timeUnit(time_spent, 'minutes')}`,
                 )
                 .setThumbnail(user.displayAvatarURL({ forceStatic: false }));
 

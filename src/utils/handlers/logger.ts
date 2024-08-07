@@ -8,7 +8,7 @@ dayjs.extend(duration);
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-dayjs.tz.setDefault('Asia/Jakarta');
+dayjs.tz.setDefault('Asia/Bangkok');
 
 interface Preset {
     symbol: string;

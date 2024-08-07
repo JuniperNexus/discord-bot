@@ -1,6 +1,5 @@
-import { getLeaderBoard } from '../../db';
 import { Command } from '../../types';
-import { convertTime, embeds, logger } from '../../utils';
+import { embeds, leaderBoard, logger, timeUnit } from '../../utils';
 
 const LIMIT = 100;
 
@@ -20,9 +19,14 @@ export const command: Command = {
                 return;
             }
 
-            const leaderBoard = await getLeaderBoard(guild.id, LIMIT);
+            const { success, message, data: leaderboard } = await leaderBoard(LIMIT);
 
-            const userIndex = leaderBoard.findIndex(entry => entry.user_id === user.id);
+            if (!success || !leaderboard) {
+                await interaction.editReply({ embeds: [embeds.error(message)] });
+                return;
+            }
+
+            const userIndex = leaderboard.findIndex(entry => entry.user_id === user.id);
 
             if (userIndex === -1) {
                 await interaction.editReply({
@@ -32,10 +36,10 @@ export const command: Command = {
             }
 
             const rank = userIndex + 1;
-            const userEntry = leaderBoard[userIndex];
+            const userEntry = leaderboard[userIndex];
             const xp = userEntry.xp;
             const level = userEntry.level;
-            const time_spent = convertTime(parseInt(userEntry.time_spent), 'minutes');
+            const time_spent = timeUnit(userEntry.time_spent, 'minutes');
 
             const embed = embeds
                 .createEmbed(

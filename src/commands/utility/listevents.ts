@@ -1,5 +1,5 @@
 import { colors } from '../../config';
-import { getEvents } from '../../db';
+import { prisma } from '../../lib/prisma';
 import { Command } from '../../types';
 import { embeds, logger } from '../../utils';
 
@@ -11,13 +11,13 @@ export const command: Command = {
         await interaction.reply({ embeds: [embeds.loading('fetching events...')], fetchReply: true });
 
         try {
-            const events = await getEvents();
-            if (events.length === 0) {
-                await interaction.editReply({ embeds: [embeds.info('no events were found.')] });
+            const events = await prisma.events.findMany();
+            if (!events) {
+                await interaction.editReply({ embeds: [embeds.error('no events were found.')] });
                 return;
             }
 
-            const eventList = events.map(e => `> • ${e.event_name}`).join('\n');
+            const eventList = events.map(e => `> • ${e.name} (id: \`${e.id}\`)`).join('\n');
             const embed = embeds.createEmbed('available events', eventList, colors.blue);
 
             await interaction.editReply({ embeds: [embed] });

@@ -1,6 +1,6 @@
 import { ActivityType } from 'discord.js';
 import { env } from '../config';
-import { getUserById, insertUser } from '../db';
+import { prisma } from '../lib/prisma';
 import { Event } from '../types';
 import { logger, timer } from '../utils';
 
@@ -38,24 +38,21 @@ export const event: Event<'ready'> = {
                 const members = guild.members.cache;
                 if (!members) return;
 
-                const jpnRole = guild.roles.cache.get(env.JPN_ROLE_ID);
+                const jpnRole = guild.roles.cache.get(env.MEMBER_ROLE_ID);
                 const interestedRole = guild.roles.cache.get(env.INTERESTED_ROLE_ID);
                 if (!jpnRole || !interestedRole) return;
 
                 for (const [id, member] of members) {
                     if (!member.roles.cache.has(jpnRole.id)) return;
 
-                    const user = await getUserById(id);
+                    const user = await prisma.users.findUnique({ where: { discord_id: id } });
                     if (user) continue;
 
                     if (member.roles.cache.has(interestedRole.id)) {
                         await member.roles.remove(interestedRole.id);
                     }
 
-                    await insertUser({
-                        user_id: id,
-                        username: member.user.username,
-                    });
+                    await prisma.users.create({ data: { discord_id: id, username: member.user.username } });
                 }
             };
 

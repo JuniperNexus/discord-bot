@@ -1,5 +1,6 @@
+import { $Enums } from '@prisma/client';
 import { ApplicationCommandOptionType } from 'discord.js';
-import { getUserById, insertCoin } from '../../db';
+import { prisma } from '../../lib/prisma';
 import { Command } from '../../types';
 import { embeds, logger } from '../../utils';
 
@@ -36,17 +37,20 @@ export const command: Command = {
             const amount = interaction.options.getNumber('amount', true);
             const reason = interaction.options.getString('reason', true);
 
-            const userData = await getUserById(user.id);
-            if (!userData) {
+            const existing = await prisma.users.findUnique({ where: { discord_id: user.id } });
+            if (!existing) {
                 await interaction.editReply({ embeds: [embeds.error('user not found in the database.')] });
                 return;
             }
 
-            await insertCoin({
-                user_id: userData.user_id,
-                amount: -amount,
-                operator: interaction.user.id,
-                reason: reason,
+            await prisma.coins.create({
+                data: {
+                    user_id: existing.id,
+                    type: $Enums.Type.DEDUCTED,
+                    amount: amount,
+                    reason: reason,
+                    operator: interaction.user.id,
+                },
             });
 
             await interaction.editReply({
